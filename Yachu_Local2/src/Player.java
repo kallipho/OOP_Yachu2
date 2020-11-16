@@ -1,9 +1,11 @@
 public class Player {
+	private String playerName;
 	private Scoreboard SB = new Scoreboard();
 	private Dice[] dice = new Dice[5];
 	public int rollNum;
 	
-	Player() {
+	Player(String Name) {
+		this.playerName = Name;
 		this.rollNum = 3;
 	}
 	
