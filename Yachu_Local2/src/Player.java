@@ -1,11 +1,23 @@
 public class Player {
-
-	//private Scoreboard board = new Scoreboard() //개인 스코어보드
-	//private Dice[] dices = new dices[5] //주사위 저장
-	//public int rollNum;
-	//public void rollDices() //주사위들을 굴림
-	//public void keep(boolean[] selectedList) //selectedList에 따라 dices.kept 조정
-
+	private String playerName;
+	private Scoreboard SB = new Scoreboard();
+	private Dice[] dice = new Dice[5];
+	public int rollNum;
+	
+	Player(String Name) {
+		this.playerName = Name;
+		this.rollNum = 3;
+	}
+	
+	public void rollDices() { //주사위를 굴림
+		for (Dice x : dice){
+			x.Roll();
+		}
+	}
+	
+	public void select(String Comb) {
+		//TODO 내용 추가 필요
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
