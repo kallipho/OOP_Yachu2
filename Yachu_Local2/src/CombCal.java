@@ -26,6 +26,13 @@ public class CombCal {
 		return cnt;
 	}
 	
+	static public boolean isAdjust(int[] Dice, int S, int E) {//S부터 E까지 인접한지 확인
+		for(int i=1; i<Arr.length; i++) {
+			if(Arr[i] != Arr[i-1]+1) return false;
+		}
+		return true;
+	}
+	
 	static public int Combination(int[] Dice, String Comb) {
 		switch(Comb) {
 		case "Ones":
@@ -55,9 +62,17 @@ public class CombCal {
 				return 0;
 			}
 		case "Full House":
-			if(CombCal.MaxSameEle(Dice)==3) {
-				if(Arrays.sort(Dice);)
+			Arrays.sort(Dice);
+			if(CountInt(Dice, Dice[0]) * CountInt(Dice, Dice[Dice.length-1]) == 6) {//이 코드는 개수가 2, 3혹은 3, 2일때만 통과됨
+				return 25;
 			}
+			else {
+				return 0;
+			}
+		}
+		case "Small straight":
+			Arrays.sort(Dice);
+			if(isAdjust(Dice.))
 	}
 	static public void main(String[] args) {
 		
