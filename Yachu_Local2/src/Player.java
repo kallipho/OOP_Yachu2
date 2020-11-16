@@ -1,7 +1,7 @@
 public class Player {
 	private String playerName;
-	public Scoreboard SB = new Scoreboard();
-	public Dice[] dice = new Dice[5];
+	Scoreboard SB = new Scoreboard();
+	Dice[] dice = new Dice[5];
 	public int rollNum;
 	
 	Player(String Name) {
