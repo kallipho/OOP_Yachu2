@@ -3,7 +3,7 @@ import java.util.Map;
 
 public class Scoreboard {
 	//private Scoreboard //Dictionary 형태. 내 스코어보드를 나타냄
-	//public void check(String combName) //조합 체크
+	//public void check(String combName, int score) //조합 체크
 	//public boolean isEnd() //체크할 칸이 남아있는지 체크
 	//public int Sum() //현재 점수합 Return (Bonus 점수 포함) 
 	
@@ -25,16 +25,21 @@ public class Scoreboard {
 		scoreboard.put("YAHTZEE", -1);
 	}
 	
-	public void check(String combName) {
-		
+	public void check(String combName, int score) {
+		scoreboard.replace(combName, score);
 	}
 	
 	public boolean isEnd() {
-		
+		if(scoreboard.get("Ones") != -1 && scoreboard.get("Twos") != -1 && scoreboard.get("Threes") != -1 && scoreboard.get("Fours") != -1 && scoreboard.get("Fives") != -1 && scoreboard.get("Sixes") != -1 && scoreboard.get("Three of a kind") != -1 && scoreboard.get("Four of a kind") != -1 && scoreboard.get("Full House") != -1 && scoreboard.get("Small straight") != -1 && scoreboard.get("Large straight") != -1 && scoreboard.get("Chance") != -1 && scoreboard.get("YAHTZEE") != -1 ) {
+			return false;
+		}
+		else return true;
 	}
 	
 	public int Sum() {
-		
+		int sum = scoreboard.get("Ones") + scoreboard.get("Twos") + scoreboard.get("Threes") + scoreboard.get("Fours") + scoreboard.get("Fives") + scoreboard.get("Sixes");
+		int bonus = sum >= 63 ? 35 : 0;
+		return sum + bonus + scoreboard.get("Three of a kind") + scoreboard.get("Four of a kind") + scoreboard.get("Full House") + scoreboard.get("Small straight") + scoreboard.get("Large straight") + scoreboard.get("Chance") + scoreboard.get("YAHTZEE");
 	}
 	
 }
