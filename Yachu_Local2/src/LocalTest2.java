@@ -6,6 +6,7 @@ public class LocalTest2 {
 		System.out.println("�젣媛� �솗�떎�븯寃� �븣�젮�뱶由ш쿋�뒿�땲�떎");
 		System.out.println("I sing one time");
 		System.out.println("sysout for pull test");
+		System.out.println("Test1");
 	}
 
 }
