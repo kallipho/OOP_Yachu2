@@ -2,19 +2,16 @@ import java.util.Scanner;
 
 public class Game {
 	public Player p1 = new Player("Justin"); //참고로 Justin은 내 이름임
-	static String[] combList = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Three of a kind", "Four of a kind", "Full house", "Small straight", "Large straight", "Chance", "Yahtzee"};
 	
 	static public String combSelect() {
 		Scanner sc = new Scanner(System.in);
 		String userInput = null;
-		boolean getout = true; //너도 좀 나가!!!!!!!!!!
-		while(getout) {
+		while(true) {
 		userInput = sc.nextLine();
-		for (String x: combList) {
-			if(userInput.equals(x)) getout = false; //This code looks like s**t. 수정필요.
+		for (String x: Scoreboard.combList) {
+			if(userInput.equals(x)) return userInput; //코드 수정 완료
 			}
 		}
-		return userInput;
 	}
 	
 	public void printMyGame() {

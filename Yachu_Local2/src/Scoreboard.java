@@ -3,6 +3,7 @@ import java.util.Map;
 
 public class Scoreboard {
 	Map<String, Integer> scoreboard = new HashMap<String, Integer>();
+	static String[] combList = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Three of a kind", "Four of a kind", "Full house", "Small straight", "Large straight", "Chance", "Yahtzee"};
 	
 	Scoreboard() {
 		scoreboard.put("Ones", -1);
