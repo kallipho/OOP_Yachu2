@@ -4,7 +4,7 @@ import java.util.Map;
 public class Scoreboard {
 	Map<String, Integer> scoreboard = new HashMap<String, Integer>();
 	static String[] combList = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Three of a kind", "Four of a kind", "Full house", "Small straight", "Large straight", "Chance", "Yahtzee"};
-	
+	static String[] intCombList = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes"};
 	Scoreboard() {
 		scoreboard.put("Ones", -1);
 		scoreboard.put("Twos", -1);
@@ -25,17 +25,23 @@ public class Scoreboard {
 		scoreboard.replace(combName, score);
 	}
 	
-	public boolean isEnd() {
-		if(scoreboard.get("Ones") != -1 && scoreboard.get("Twos") != -1 && scoreboard.get("Threes") != -1 && scoreboard.get("Fours") != -1 && scoreboard.get("Fives") != -1 && scoreboard.get("Sixes") != -1 && scoreboard.get("Three of a kind") != -1 && scoreboard.get("Four of a kind") != -1 && scoreboard.get("Full House") != -1 && scoreboard.get("Small straight") != -1 && scoreboard.get("Large straight") != -1 && scoreboard.get("Chance") != -1 && scoreboard.get("YAHTZEE") != -1 ) {
-			return false;
+	public boolean isEnd() { //static List 추가해서 최적화시켜놨음.
+		for (String x: Scoreboard.combList) {
+			if(scoreboard.get(x) == -1) return true;
 		}
-		else return true;
+		return false;
 	}
 	
-	public int Sum() {
-		int sum = scoreboard.get("Ones") + scoreboard.get("Twos") + scoreboard.get("Threes") + scoreboard.get("Fours") + scoreboard.get("Fives") + scoreboard.get("Sixes");
-		int bonus = sum >= 63 ? 35 : 0;
-		return sum + bonus + scoreboard.get("Three of a kind") + scoreboard.get("Four of a kind") + scoreboard.get("Full House") + scoreboard.get("Small straight") + scoreboard.get("Large straight") + scoreboard.get("Chance") + scoreboard.get("YAHTZEE");
+	public int Sum() { //static List 추가해서 최적화시켜놨음.
+		int subSum = 0;
+		for (String x: Scoreboard.intCombList) {
+			if(scoreboard.get(x)>-1) subSum += scoreboard.get(x); //-1점이면 안 더해야됨.
+		}
+		int sum = 0;
+		for (String x: Scoreboard.combList) {
+			if(scoreboard.get(x)>-1) sum += scoreboard.get(x);
+		}
+		return sum + subSum >= 63 ? 35 : 0;
 	}
 	
 }
