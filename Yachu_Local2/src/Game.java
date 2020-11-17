@@ -2,9 +2,9 @@ import java.util.Scanner;
 
 public class Game {
 	public Player p1 = new Player("Justin"); //참고로 Justin은 내 이름임
+	static String[] combList = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Three of a kind", "Four of a kind", "Full house", "Small straight", "Large straight", "Chance", "Yahtzee"};
 	
 	static public String combSelect() {
-		String[] combList = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Three of a kind", "Four of a kind", "Full house", "Small straight", "Large straight", "Chance", "Yahtzee"};
 		Scanner sc = new Scanner(System.in);
 		String userInput = null;
 		boolean getout = true; //너도 좀 나가!!!!!!!!!!
@@ -17,22 +17,31 @@ public class Game {
 		return userInput;
 	}
 	
-	static String SB_toString(Dice[] dices) {
-		String str = "";
-		for(int i=0; i<5; i++) {
-			if(dices[i].kept) str+="■";
-			else str+="□";
-			str += "|";
+	public void printMyGame() {
+		int[] intDice = new int[5];
+		for (int i=0; i<5; i++) {
+			intDice[i] = p1.dice[i].eyes;
 		}
-		str += "|6:Roll Again|7:No more Roll";
-		return str;
+		for (String x: combList) {
+			System.out.println(x + " / " + p1.SB.scoreboard.get(x) + " / " + CombCal.Combination(intDice, x));
+		}
+		System.out.println(intDice[0] + " / " + intDice[1] + " / " + intDice[2] + " / " + intDice[3] + " / " + intDice[4] + " / ");
+		for (Dice x: p1.dice) {
+			if(x.kept) {
+				System.out.print("■ / ");
+			}
+			else {
+				System.out.print("□ / ");
+			}
+		}
+		System.out.println('\r');
 	}
 	
 	public boolean Select() {
 		Scanner sc = new Scanner(System.in);
 		while(true) {
 			int userInput = -1;
-			System.out.println(Game.SB_toString(p1.dice));
+			printMyGame();
 			while(userInput<1 || 7<userInput) {
 				userInput = sc.nextInt();
 			}
