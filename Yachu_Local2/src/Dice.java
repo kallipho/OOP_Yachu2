@@ -1,18 +1,39 @@
 import java.util.Random;
+
 public class Dice {
-	protected int eyes;
-	protected boolean kept;
+	private int Eye;
+	private boolean isLock;
 	
-	protected void Roll() {
-		if(!kept) {
+	public void Roll() {
+		if(!isLock) {
 			Random rand = new Random();
-			eyes = 1 + rand.nextInt(5); //rand.nextInt(5)는 0~5까지 Int를 생성시키고 1을 더하면 1~6이 됨.
+			Eye = 1 + rand.nextInt(5);
 		}
+	}
+	
+	public void Lock(){
+		isLock = true;
+	}
+	
+	public void Unlock() {
+		isLock = false;
+	}
+	
+	public void ReverseLock() {
+		isLock = !isLock;
+	}
+	
+	public int getEye() {
+		return Eye;
+	}
+	
+	public boolean getIsLock(){
+		return isLock;
 	}
 	
 	Dice(){
 		Random rand = new Random();
-		this.eyes = 1 + rand.nextInt(5); //생성할 때 랜덤으로 초기화
-		this.kept = false;
+		this.Eye = 1 + rand.nextInt(5);
+		this.isLock = false;
 	}
 }
