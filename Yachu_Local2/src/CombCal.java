@@ -33,62 +33,66 @@ public class CombCal {
 		return true;
 	}
 	
-	static public int Combination(int[] Dice, String Comb) {
+	static public int Combination(Dice[] dices, String Comb) {
+		int[] intDice = new int[5];
+		for (int i=0; i<5; i++) {
+			intDice[i] = dices[i].eyes;
+		}
 		switch(Comb) {
 		case "Ones":
-			return CombCal.CountInt(Dice, 1);
+			return CombCal.CountInt(intDice, 1);
 		case "Twos":
-			return CombCal.CountInt(Dice, 2);
+			return CombCal.CountInt(intDice, 2);
 		case "Threes":
-			return CombCal.CountInt(Dice, 3);
+			return CombCal.CountInt(intDice, 3);
 		case "Fours":
-			return CombCal.CountInt(Dice, 4);
+			return CombCal.CountInt(intDice, 4);
 		case "Fives":
-			return CombCal.CountInt(Dice, 5);
+			return CombCal.CountInt(intDice, 5);
 		case "Sixes":
-			return CombCal.CountInt(Dice, 6);
+			return CombCal.CountInt(intDice, 6);
 		case "Three of a kind":
-			if(CombCal.MaxSameEle(Dice)>=3) {
-				return CombCal.MaxSameEle(Dice);
+			if(CombCal.MaxSameEle(intDice)>=3) {
+				return CombCal.MaxSameEle(intDice);
 			}
 			else {
 				return 0;
 			}
 		case "Four of a kind":
-			if(CombCal.MaxSameEle(Dice)>=4) {
-				return CombCal.MaxSameEle(Dice);
+			if(CombCal.MaxSameEle(intDice)>=4) {
+				return CombCal.MaxSameEle(intDice);
 			}
 			else {
 				return 0;
 			}
-		case "Full House":
-			Arrays.sort(Dice);
-			if(CountInt(Dice, Dice[0]) * CountInt(Dice, Dice[Dice.length-1]) == 6) {//이 코드는 개수가 2, 3혹은 3, 2일때만 통과됨
+		case "Full house":
+			Arrays.sort(intDice);
+			if(CountInt(intDice, intDice[0]) * CountInt(intDice, intDice[intDice.length-1]) == 6) {//이 코드는 개수가 2, 3혹은 3, 2일때만 통과됨
 				return 25;
 			}
 			else {
 				return 0;
 			}
 		case "Small straight":
-			Arrays.sort(Dice);
-			if(isAdjust(Dice, 1, 3) || isAdjust(Dice, 2, 4)) {
+			Arrays.sort(intDice);
+			if(isAdjust(intDice, 1, 3) || isAdjust(intDice, 2, 4)) {
 				return 30;
 			}
 			else {
 				return 0;
 			}
 		case "Large straight":
-			Arrays.sort(Dice);
-			if(isAdjust(Dice, 1, 4)) {
+			Arrays.sort(intDice);
+			if(isAdjust(intDice, 1, 4)) {
 				return 40;
 			}
 			else {
 				return 0;
 			}
 		case "Chance":
-			return CombCal.EleSum(Dice);
+			return CombCal.EleSum(intDice);
 		case "Yahtzee":
-			if(CombCal.MaxSameEle(Dice)==5) {
+			if(CombCal.MaxSameEle(intDice)==5) {
 				return 50;
 			}
 			else {

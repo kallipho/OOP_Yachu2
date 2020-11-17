@@ -17,9 +17,9 @@ public class Scoreboard {
 	
 	public boolean isEnd() { //static List 추가해서 최적화시켜놨음.
 		for (String x: Scoreboard.combList) {
-			if(scoreboard.get(x) == -1) return true;
+			if(scoreboard.get(x) == -1) return false;
 		}
-		return false;
+		return true;
 	}
 	
 	public int Sum() { //static List 추가해서 최적화시켜놨음.
