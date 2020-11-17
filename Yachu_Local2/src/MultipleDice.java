@@ -17,15 +17,15 @@ public class MultipleDice {
 	}
 	
 	public void RollDices(){
-		for(Dice x: Dices) {
-			x.Roll();
+		for(int i = 0; i < Dices.length; i++) {
+			Dices[i].Roll();
 		}
 	}
 	
 	public void SetDefaultValue() {
-		for(Dice x: Dices) {
-			x.Unlock();
-			x.Roll();
+		for(int i = 0; i < Dices.length; i++) {
+			Dices[i].Unlock();
+			Dices[i].Roll();
 		}
 	}
 	
