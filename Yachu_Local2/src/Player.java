@@ -17,14 +17,4 @@ public class Player {
 			x.Roll();
 		}
 	}
-	
-	public void select(String Comb) {
-		//TODO 내용 추가 필요
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

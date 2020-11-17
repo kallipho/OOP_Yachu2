@@ -71,7 +71,7 @@ public class CombCal {
 			}
 		case "Small straight":
 			Arrays.sort(Dice);
-			if(isAdjust(Dice, 0, 3) || isAdjust(Dice, 1, 4)) {
+			if(isAdjust(Dice, 1, 3) || isAdjust(Dice, 2, 4)) {
 				return 30;
 			}
 			else {
@@ -79,7 +79,7 @@ public class CombCal {
 			}
 		case "Large straight":
 			Arrays.sort(Dice);
-			if(isAdjust(Dice, 0, 4)) {
+			if(isAdjust(Dice, 1, 4)) {
 				return 40;
 			}
 			else {
