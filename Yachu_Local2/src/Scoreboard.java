@@ -6,19 +6,9 @@ public class Scoreboard {
 	static String[] combList = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Three of a kind", "Four of a kind", "Full house", "Small straight", "Large straight", "Chance", "Yahtzee"};
 	static String[] intCombList = {"Ones", "Twos", "Threes", "Fours", "Fives", "Sixes"};
 	Scoreboard() {
-		scoreboard.put("Ones", -1);
-		scoreboard.put("Twos", -1);
-		scoreboard.put("Threes", -1);
-		scoreboard.put("Fours", -1);
-		scoreboard.put("Fives", -1);
-		scoreboard.put("Sixes", -1);
-		scoreboard.put("Three of a kind", -1);
-		scoreboard.put("Four of a kind", -1);
-		scoreboard.put("Full House", -1);
-		scoreboard.put("Small straight", -1);
-		scoreboard.put("Large straight", -1);
-		scoreboard.put("Chance", -1);
-		scoreboard.put("YAHTZEE", -1);
+		for(String x: combList) {
+			scoreboard.put(x, -1);
+		}
 	}
 	
 	public void check(String combName, int score) {
