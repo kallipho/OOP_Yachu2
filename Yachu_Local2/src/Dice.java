@@ -1,7 +1,7 @@
 import java.util.Random;
 public class Dice {
 	protected int eyes;
-	protected boolean kept; //True¸é Åµ µÈ°Å 
+	protected boolean kept;
 	
 	protected void Roll() {
 		if(!kept) {
