@@ -5,16 +5,22 @@ public class Game {
 
 	public void printMyGame() {
 		for (String x: Scoreboard.combList) {
-			System.out.printf("%-20s%-5d%-5d\n", x, p1.SB.scoreboard.get(x), CombCal.Combination(p1.dice, x));
+			System.out.printf("%-20s", x);
+			if(p1.SB.scoreboard.get(x)==-1) System.out.printf("%-5s", "-");
+			else System.out.printf("%-5d", p1.SB.scoreboard.get(x));
+			System.out.printf("%-5d\n", CombCal.Combination(p1.dice, x));
 		}
 		System.out.printf("==============================\n");	
 		System.out.printf("%-3d%-3d%-3d%-3d%-3d\n", p1.dice[0].eyes, p1.dice[1].eyes, p1.dice[2].eyes, p1.dice[3].eyes, p1.dice[4].eyes);
 		System.out.printf("%-3s%-3s%-3s%-3s%-3s\n", p1.dice[0].kept?"бс":"бр",p1.dice[1].kept?"бс":"бр",p1.dice[2].kept?"бс":"бр",p1.dice[3].kept?"бс":"бр",p1.dice[4].kept?"бс":"бр");
+		System.out.printf("%d roll left| 6: Roll | 7: End\n", p1.rollNum);
+		System.out.printf("==============================\n");	
 	}
 	
 	public void printMyDice() {	
 		System.out.printf("%-3d%-3d%-3d%-3d%-3d\n", p1.dice[0].eyes, p1.dice[1].eyes, p1.dice[2].eyes, p1.dice[3].eyes, p1.dice[4].eyes);
 		System.out.printf("%-3s%-3s%-3s%-3s%-3s\n", p1.dice[0].kept?"бс":"бр",p1.dice[1].kept?"бс":"бр",p1.dice[2].kept?"бс":"бр",p1.dice[3].kept?"бс":"бр",p1.dice[4].kept?"бс":"бр");
+		System.out.printf("%d roll left| 6: Roll | 7: End\n", p1.rollNum);
 		System.out.printf("==============================\n");
 	}
 	
@@ -30,13 +36,14 @@ public class Game {
 				printMyDice();
 			}
 			else {
-				if(userInput==6) return false;
-				else return true;
+				if(userInput==6) return true;
+				else return false;
 			}
 		}
 	}
 	
 	static public String combSelect() {
+		System.out.println("Enter Combination Name");
 		Scanner sc = new Scanner(System.in);
 		String userInput = null;
 		while(true) {
@@ -44,16 +51,22 @@ public class Game {
 		for (String x: Scoreboard.combList) {
 			if(userInput.equals(x)) return userInput;
 			}
+			System.out.println("Invalid Combination Name!");
 		}
 	}
 	
 	public void Run() {
 		while(!p1.SB.isEnd()) {
+			p1.resetRollNum();
 			p1.rollDices();
 			printMyGame();
-			Select();
+			while(p1.rollNum>0 && Select()) {
+				p1.rollDices();
+				printMyGame();
+			}
 			String userInput = combSelect();	
 			p1.SB.check(userInput, CombCal.Combination(p1.dice, userInput));
+			p1.resetDiceKeeps();
 		}
 	}
 	

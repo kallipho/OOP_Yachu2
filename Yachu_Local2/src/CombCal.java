@@ -40,27 +40,27 @@ public class CombCal {
 		}
 		switch(Comb) {
 		case "Ones":
-			return CombCal.CountInt(intDice, 1);
+			return 1*CombCal.CountInt(intDice, 1);
 		case "Twos":
-			return CombCal.CountInt(intDice, 2);
+			return 2*CombCal.CountInt(intDice, 2);
 		case "Threes":
-			return CombCal.CountInt(intDice, 3);
+			return 3*CombCal.CountInt(intDice, 3);
 		case "Fours":
-			return CombCal.CountInt(intDice, 4);
+			return 4*CombCal.CountInt(intDice, 4);
 		case "Fives":
-			return CombCal.CountInt(intDice, 5);
+			return 5*CombCal.CountInt(intDice, 5);
 		case "Sixes":
-			return CombCal.CountInt(intDice, 6);
+			return 6*CombCal.CountInt(intDice, 6);
 		case "Three of a kind":
 			if(CombCal.MaxSameEle(intDice)>=3) {
-				return CombCal.MaxSameEle(intDice);
+				return CombCal.EleSum(intDice);
 			}
 			else {
 				return 0;
 			}
 		case "Four of a kind":
 			if(CombCal.MaxSameEle(intDice)>=4) {
-				return CombCal.MaxSameEle(intDice);
+				return CombCal.EleSum(intDice);
 			}
 			else {
 				return 0;
@@ -101,8 +101,5 @@ public class CombCal {
 		default:
 			return -1; //이론적으로는 -1이 리턴될 수 없음. CombCal은 올바른 조합 이름이 들어와야 인식할 수 있음.
 		}
-	}
-	static public void main(String[] args) {
-		
 	}
 }
