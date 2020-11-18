@@ -15,9 +15,9 @@ public class Game {
 		return -1;
 	}
 	
-	static public boolean isValidComb(String CombName) {
+	public boolean isValidComb(String CombName) {
 	for (String x: Scoreboard.combList) {
-		if(CombName.equals(x)) return true;
+		if(CombName.equals(x) && p1.isEmpty(CombName)) return true;
 		}
 	return false;
 	}
