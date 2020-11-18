@@ -9,7 +9,7 @@ public class CombCal {
 		return cnt;
 	}
 	
-	static public int MaxSameEle(int[] Dice) {
+	static public int MaxSameEle(int[] Dice) { // 배열 Dice 안의 같은 눈을 가진 주사위 수 중 가장 큰 개수 (ex 44421처럼 되어있으면 4가 3개로 제일 많으므로 3을 리턴)
 		int[] cnt = new int[6];
 		for (int x: Dice) {
 			cnt[x-1]++;
@@ -18,7 +18,7 @@ public class CombCal {
 		return cnt[cnt.length-1];
 	}
 	
-	static public int EleSum(int[] Dice) {
+	static public int EleSum(int[] Dice) { //배열 Dice 안 주사위 눈 총합 리턴
 		int cnt = 0;
 		for (int x: Dice) {
 			cnt += x;
