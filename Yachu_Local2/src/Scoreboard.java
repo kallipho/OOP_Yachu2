@@ -40,8 +40,8 @@ public class Scoreboard {
 	}
 	
 	public boolean isMinusOne(String CombName) {
-		if (scoreboard.get(CombName)==-1) return false;
-		else return true;
+		if (scoreboard.get(CombName)==-1) return true;
+		else return false;
 	}
 	
 	public void printScoreboard(MultipleDice Dices) {
