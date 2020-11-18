@@ -39,6 +39,11 @@ public class Scoreboard {
 		return sum + (BonusSum() >= 63 ? 35 : 0);
 	}
 	
+	public boolean isMinusOne(String CombName) {
+		if (scoreboard.get(CombName)==-1) return false;
+		else return true;
+	}
+	
 	public void printScoreboard(MultipleDice Dices) {
 		for (String x: combList) {
 			System.out.printf("%-20s", x);

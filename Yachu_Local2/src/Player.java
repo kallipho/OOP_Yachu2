@@ -53,6 +53,11 @@ public class Player {
 		scoreboard.check(CombName, CombCal.Combination(Dices, CombName));
 	}
 	
+	public boolean isEmpty(String CombName) {
+		if(scoreboard.isMinusOne(CombName)) return true;
+		else return false;
+	}
+	
 	public void printMyGame() {
 		clearScreen();
 		scoreboard.printScoreboard(Dices);
