@@ -4,13 +4,14 @@ public class Game {
 	public Player p1 = new Player("Justin"); //참고로 Justin은 내 이름임
 	
 	public int Select() {
+		int userChar = 0;
 		Scanner sc = new Scanner(System.in);
 		String userInput = sc.nextLine();
-		for(int i=0; i<userInput.length(); i++) {
-			int userChar = userInput.charAt(i)-'0';
-			if(1<=userChar && userChar<=7) {
-				return userChar;
-			}
+		if(userInput.length() == 1) {
+			userChar = userInput.charAt(0)-'0';
+		}
+		if(1<=userChar && userChar<=7) {
+			return userChar;
 		}
 		return -1;
 	}
