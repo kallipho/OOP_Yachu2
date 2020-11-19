@@ -28,7 +28,7 @@ public class Player {
 	}
 	
 	private void printScore() {
-		System.out.printf("%s : %d (Bonus : %d)\n", playerName, scoreboard.Sum(), scoreboard.BonusSum());
+		System.out.printf("%s : %d (For Bonus : %d)\n", playerName, scoreboard.Sum(), scoreboard.BonusSum());
 	}
 	
 	private static void clearScreen() {  
@@ -68,5 +68,8 @@ public class Player {
 		Dices.printLocks();
 		printBar();
 		System.out.printf("%d roll left| 6: Roll | 7: End\n", rollNum);
+		if(isEnd()) {
+			System.out.println("Game Over!!!");
+		}
 	}
 }

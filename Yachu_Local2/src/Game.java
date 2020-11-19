@@ -52,6 +52,7 @@ public class Game {
 			} while(!isValidComb(userInput));
 			p1.Check(userInput);
 		}
+		p1.printMyGame();
 	}
 	
 	static public void main(String args[]) {
