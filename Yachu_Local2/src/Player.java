@@ -1,5 +1,5 @@
 public class Player {
-	private String playerName;
+	private String playerName; //플레이어 이름
 	private Scoreboard scoreboard = new Scoreboard();
 	private MultipleDice Dices = new MultipleDice();
 	private int rollNum;

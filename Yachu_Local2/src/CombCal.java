@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class CombCal {
+public class CombCal { //조합에 따른 점수 계산기
 	static public int CountInt(int[] Dice, int N) { // 배열 Dice 안 N의 개수를 세기
 		int cnt = 0;
 		for (int x: Dice) {
