@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Game {
+public class Game{
 	public Player p1 = new Player("Justin"); //참고로 Justin은 내 이름임
 	
 	public int Select() {
@@ -57,6 +57,7 @@ public class Game {
 	
 	static public void main(String args[]) {
 		Game g = new Game();
+		g.openGUI();
 		g.Run();
 	}
 }
