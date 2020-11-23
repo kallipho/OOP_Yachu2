@@ -26,44 +26,44 @@ public class CombCal { //조합에 따른 점수 계산기
 		return cnt;
 	}
 	
-	static public boolean isAdjust(int[] Dice, int S, int E) {//S부터 E까지 인접한지 확인
+	static public boolean isAdjust(int[] Dice, int S, int E) {//S부터 E까지 주사위 눈 값들이 인접한지 확인 (ex 12345)
 		for(int i=S; i<=E; i++) {
 			if(Dice[i] != Dice[i-1]+1) return false;
 		}
 		return true;
 	}
 	
-	static public int Combination(MultipleDice Dices, String Comb) {
+	static public int Combination(MultipleDice Dices, String Comb) { //각 조합들 점수 계산
 		int[] intDice = new int[5];
 		intDice = Dices.intDices();
 		switch(Comb) {
-		case "Ones":
+		case "Ones": // 1들의 총합
 			return 1*CombCal.CountInt(intDice, 1);
-		case "Twos":
+		case "Twos": // 2들의 총합
 			return 2*CombCal.CountInt(intDice, 2);
-		case "Threes":
+		case "Threes": // 3들의 총합
 			return 3*CombCal.CountInt(intDice, 3);
-		case "Fours":
+		case "Fours": // 4들의 총합
 			return 4*CombCal.CountInt(intDice, 4);
-		case "Fives":
+		case "Fives": // 5들의 총합
 			return 5*CombCal.CountInt(intDice, 5);
-		case "Sixes":
+		case "Sixes": // 6들의 총합
 			return 6*CombCal.CountInt(intDice, 6);
-		case "Three of a kind":
+		case "Three of a kind": // 3개의 눈이 같을 눈일 시 모든 눈의 총합 리턴
 			if(CombCal.MaxSameEle(intDice)>=3) {
 				return CombCal.EleSum(intDice);
 			}
 			else {
 				return 0;
 			}
-		case "Four of a kind":
+		case "Four of a kind": // 4개의 눈이 같은 눈일 시 모든 눈의 총합 리턴
 			if(CombCal.MaxSameEle(intDice)>=4) {
 				return CombCal.EleSum(intDice);
 			}
 			else {
 				return 0;
 			}
-		case "Full house":
+		case "Full house": // 풀하우스는 25점
 			Arrays.sort(intDice);
 			if(CountInt(intDice, intDice[0]) * CountInt(intDice, intDice[intDice.length-1]) == 6) {//이 코드는 개수가 2, 3혹은 3, 2일때만 통과됨
 				return 25;
@@ -71,7 +71,7 @@ public class CombCal { //조합에 따른 점수 계산기
 			else {
 				return 0;
 			}
-		case "Small straight":
+		case "Small straight": //4개가 연속되면 30점
 			Arrays.sort(intDice);
 			if(isAdjust(intDice, 1, 3) || isAdjust(intDice, 2, 4)) {
 				return 30;
@@ -79,7 +79,7 @@ public class CombCal { //조합에 따른 점수 계산기
 			else {
 				return 0;
 			}
-		case "Large straight":
+		case "Large straight": // 5개가 연속되면 40점
 			Arrays.sort(intDice);
 			if(isAdjust(intDice, 1, 4)) {
 				return 40;
@@ -87,9 +87,9 @@ public class CombCal { //조합에 따른 점수 계산기
 			else {
 				return 0;
 			}
-		case "Chance":
+		case "Chance": // 모든 눈의 총합
 			return CombCal.EleSum(intDice);
-		case "Yahtzee":
+		case "Yahtzee": // 5개가 모두 눈이 같으면 50점
 			if(CombCal.MaxSameEle(intDice)==5) {
 				return 50;
 			}
