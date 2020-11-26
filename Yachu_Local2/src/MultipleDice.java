@@ -67,14 +67,18 @@ public class MultipleDice {
 		return Dices[n].getEye();
 	}
 	
+	public boolean getLock(int n) {
+		return Dices[n].getIsLock();
+	}
+	
 	public void doRollDices(){
-		for(int i = 0; i < Dices.length; i++) {
+		for(int i = 0; i < 5; i++) {
 			Dices[i].roll();
 		}
 	}
 	
 	public void setDefaultValue() {
-		for(int i = 0; i < Dices.length; i++) {
+		for(int i = 0; i < 5; i++) {
 			Dices[i].unlock();
 			Dices[i].roll();
 		}

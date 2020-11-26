@@ -2,7 +2,7 @@ class GamePlayer {
 	protected String playerName;
 	protected Scoreboard scoreboard = new Scoreboard();
 	protected MultipleDice Dices = new MultipleDice();
-	protected int rollNum;
+	protected int rollNum = 2;
 	
 	GamePlayer(String Name) {
 		this.playerName = Name;
@@ -10,12 +10,14 @@ class GamePlayer {
 	}
 	
 	public void doRoll() { //주사위를 굴림
-		--rollNum;
-		Dices.doRollDices();
+		if(rollNum>0) {
+			--rollNum;
+			Dices.doRollDices();
+		}
 	}
 	
 	public void startTurn() {
-		rollNum = 2;
+		this.rollNum = 2;
 		Dices.setDefaultValue();
 	}
 	
