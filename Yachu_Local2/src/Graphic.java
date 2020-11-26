@@ -1,17 +1,23 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class Graphic extends Game{
+public class Graphic{
+	Player p1 = new Player("Justin");
+	
 	String CombText; GridBagConstraints CombGBC = new GridBagConstraints();
 	String PlayerScoreText; GridBagConstraints PlayerScoreGBC = new GridBagConstraints();
 	String EstimateScoreText; GridBagConstraints EstimateScoreGBC = new GridBagConstraints();
 	String PlayerScoreSumText; GridBagConstraints PlayerScoreSumGBC = new GridBagConstraints();
+	int[] DiceText = new int[5];
 	boolean[] ButtonColor = new boolean[5];
 	
 	public void runBackRender() {
@@ -32,6 +38,9 @@ public class Graphic extends Game{
 			EstimateScoreText += CombCal.Combination(p1.Dices, x) + "<br/>";
 		}
 		EstimateScoreText += "</html>";	
+		
+		DiceText = p1.Dices.toIntDices();
+		ButtonColor = p1.Dices.toLockDices();
 	}
 	
 	public void runFrontRender() {
@@ -68,16 +77,30 @@ public class Graphic extends Game{
 		JButton[] buttons = new JButton[5];
 		GridBagConstraints[] buttonGBC = new GridBagConstraints[5];
 		for(int i=0; i<5; i++) {
-			buttons[i] = new JButton(Integer.toString(p1.Dices.));
+			buttons[i] = new JButton(Integer.toString(DiceText[i]));
 			buttonGBC[i] = new GridBagConstraints();
-			buttonGBC[i].gridx = i;
-			buttonGBC[i].gridy = 7;
-			buttonGBC[i].gridwidth = 1;
-			buttonGBC[i].gridheight = 1;
+			buttonGBC[i].gridx = i; buttonGBC[i].gridy = 7; buttonGBC[i].gridwidth = 1; buttonGBC[i].gridheight = 1;
+			if(ButtonColor[i]) buttons[i].setBackground(Color.RED);
+			else buttons[i].setBackground(Color.BLUE);
+			buttons[i].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("Hello");
+				}
+			});
 			frame.add(buttons[i], buttonGBC[i]);
 		}
   
-  frame.pack();
-  frame.setVisible(true);
+		frame.pack();
+		frame.setVisible(true);
+	}
+	
+	public void run() {
+		p1.startTurn();
+		runBackRender();
+		runFrontRender();
+	}
+	
+	public static void main(String[] args) {
+		run();
 	}
 }

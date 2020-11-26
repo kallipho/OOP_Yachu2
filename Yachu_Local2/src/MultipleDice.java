@@ -55,6 +55,14 @@ public class MultipleDice {
 		return intDice;
 	}
 	
+	public boolean[] toLockDices() {
+		boolean[] isLockArray = new boolean[5];
+		for (int i=0; i<5; i++) {
+			isLockArray[i] = Dices[i].getIsLock();
+		}
+		return isLockArray;
+	}
+	
 	public int getEye(int n) {
 		return Dices[n].getEye();
 	}
@@ -73,6 +81,6 @@ public class MultipleDice {
 	}
 	
 	public void reverseSelectedDice(int SelectList) {
-		Dices[SelectList-1].reverseLock();
+		Dices[SelectList].reverseLock();
 	}
 }

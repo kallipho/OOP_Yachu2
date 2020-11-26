@@ -1,6 +1,3 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 class GamePlayer {
 	protected String playerName;
 	protected Scoreboard scoreboard = new Scoreboard();
@@ -41,8 +38,18 @@ public class Player extends GamePlayer{
 			super(Name);
 	}
 	
-	public String PScore() {
-		
+	public boolean isValidComb(String CombName) {
+		for (String x: Scoreboard.combList) {
+			if(CombName.equals(x) && scoreboard.accessBoard(x)==-1) return true;
+			}
+		return false;
+	}
+	
+	public boolean isEnd() {
+		for (String x: Scoreboard.combList) {
+			if(scoreboard.accessBoard(x)==-1) return false;
+		}
+		return true;
 	}
 }
 
