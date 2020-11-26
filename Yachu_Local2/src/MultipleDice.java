@@ -1,3 +1,42 @@
+import java.util.Random;
+
+class Dice {
+	private int Eye;
+	private boolean isLock;
+	
+	public void roll() {
+		if(!isLock) {
+			Random rand = new Random();
+			Eye = 1 + rand.nextInt(5);
+		}
+	}
+	
+	public void lock(){
+		isLock = true;
+	}
+	
+	public void unlock() {
+		isLock = false;
+	}
+	
+	public void reverseLock() {
+		isLock = !isLock;
+	}
+	
+	public int getEye() {
+		return Eye;
+	}
+	
+	public boolean getIsLock(){
+		return isLock;
+	}
+	
+	Dice(){
+		Random rand = new Random();
+		this.Eye = 1 + rand.nextInt(5);
+		this.isLock = false;
+	}
+}
 
 public class MultipleDice {
 	private Dice[] Dices = new Dice[5];
@@ -8,7 +47,7 @@ public class MultipleDice {
 		}
 	}
 	
-	public int[] intDices() {
+	public int[] toIntDices() {
 		int[] intDice = new int[5];
 		for (int i=0; i<5; i++) {
 			intDice[i] = Dices[i].getEye();
@@ -16,35 +55,36 @@ public class MultipleDice {
 		return intDice;
 	}
 	
-	public void RollDices(){
-		for(int i = 0; i < Dices.length; i++) {
-			Dices[i].Roll();
+	public boolean[] toLockDices() {
+		boolean[] isLockArray = new boolean[5];
+		for (int i=0; i<5; i++) {
+			isLockArray[i] = Dices[i].getIsLock();
+		}
+		return isLockArray;
+	}
+	
+	public int getEye(int n) {
+		return Dices[n].getEye();
+	}
+	
+	public boolean getLock(int n) {
+		return Dices[n].getIsLock();
+	}
+	
+	public void doRollDices(){
+		for(int i = 0; i < 5; i++) {
+			Dices[i].roll();
 		}
 	}
 	
-	public void SetDefaultValue() {
-		for(int i = 0; i < Dices.length; i++) {
-			Dices[i].Unlock();
-			Dices[i].Roll();
+	public void setDefaultValue() {
+		for(int i = 0; i < 5; i++) {
+			Dices[i].unlock();
+			Dices[i].roll();
 		}
 	}
 	
-	public void ReverseLockByArray(int SelectList) {
-		Dices[SelectList-1].ReverseLock();
-	}
-	
-	public void printEyes() {
-		for(Dice x: Dices) {
-			System.out.printf("%-3d", x.getEye());
-		}
-		System.out.printf("\n");
-	}
-	
-	public void printLocks() {
-		for(Dice x: Dices) {
-			if(x.getIsLock()) System.out.printf("%-3s", "бс");
-			else System.out.printf("%-3s", "бр");
-		}
-		System.out.printf("\n");
+	public void reverseSelectedDice(int SelectList) {
+		Dices[SelectList].reverseLock();
 	}
 }

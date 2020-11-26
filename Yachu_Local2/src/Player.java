@@ -1,75 +1,57 @@
-public class Player {
-	private String playerName;
-	private Scoreboard scoreboard = new Scoreboard();
-	private MultipleDice Dices = new MultipleDice();
-	private int rollNum;
+class GamePlayer {
+	protected String playerName;
+	protected Scoreboard scoreboard = new Scoreboard();
+	protected MultipleDice Dices = new MultipleDice();
+	protected int rollNum = 2;
 	
-	Player(String Name) {
+	GamePlayer(String Name) {
 		this.playerName = Name;
 		this.rollNum = 2;
 	}
 	
-	public void PlayerRollsDices() { //주사위를 굴림
-		--rollNum;
-		Dices.RollDices();
-	}
-	
-	public void SetDefaultValue() {
-		rollNum = 2;
-		Dices.SetDefaultValue();
-	}
-	
-	public void SetRollNumtoZero() {
-		rollNum = 0;
-	}
-	
-	private void printBar() {
-		System.out.println("==============================");
-	}
-	
-	private void printScore() {
-		System.out.printf("%s : %d (For Bonus : %d)\n", playerName, scoreboard.Sum(), scoreboard.BonusSum());
-	}
-	
-	private static void clearScreen() {  
-		for(int i=0; i<50; i++) {
-			System.out.printf("\n");
+	public void doRoll() { //주사위를 굴림
+		if(rollNum>0) {
+			--rollNum;
+			Dices.doRollDices();
 		}
-	}  
+	}
 	
-	public boolean isEnd() {
-		return scoreboard.isEnd();
+	public void startTurn() {
+		this.rollNum = 2;
+		Dices.setDefaultValue();
+	}
+	
+	public void endTurn() {
+		rollNum = 0;
 	}
 	
 	public int getRollNum() {
 		return rollNum;
 	}
 	
-	public void ReverseLockByArray(int SelectList) {
-		Dices.ReverseLockByArray(SelectList);
-	}
-	
-	public void Check(String CombName) {
-		scoreboard.check(CombName, CombCal.Combination(Dices, CombName));
-	}
-	
-	public boolean isEmpty(String CombName) {
-		if(scoreboard.isMinusOne(CombName)) return true;
-		else return false;
-	}
-	
-	public void printMyGame() {
-		clearScreen();
-		scoreboard.printScoreboard(Dices);
-		printBar();
-		printScore();
-		printBar();
-		Dices.printEyes();
-		Dices.printLocks();
-		printBar();
-		System.out.printf("%d roll left| 6: Roll | 7: End\n", rollNum);
-		if(isEnd()) {
-			System.out.println("Game Over!!!");
-		}
+	public void doCheck(String CombName) {
+		scoreboard.doCheck(CombName, CombCal.Combination(Dices, CombName));
 	}
 }
+
+public class Player extends GamePlayer{
+	
+	Player(String Name) {
+			super(Name);
+	}
+	
+	public boolean isValidComb(String CombName) {
+		for (String x: Scoreboard.combList) {
+			if(CombName.equals(x) && scoreboard.accessBoard(CombName)==-1) return true;
+			}
+		return false;
+	}
+	
+	public boolean isEnd() {
+		for (String x: Scoreboard.combList) {
+			if(scoreboard.accessBoard(x)==-1) return false;
+		}
+		return true;
+	}
+}
+

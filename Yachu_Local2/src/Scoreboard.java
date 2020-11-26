@@ -12,7 +12,11 @@ public class Scoreboard {
 		}
 	}
 	
-	public void check(String combName, int score) {
+	public Integer accessBoard(String x) {
+		return scoreboard.get(x);
+	}
+	
+	public void doCheck(String combName, int score) {
 		scoreboard.replace(combName, score);
 	}
 	
@@ -23,7 +27,7 @@ public class Scoreboard {
 		return true;
 	}
 	
-	public int BonusSum() {
+	public int getBonusSum() {
 		int subSum = 0;
 		for (String x: Scoreboard.intCombList) {
 			if(scoreboard.get(x)>-1) subSum += scoreboard.get(x); //-1점이면 안 더해야됨.
@@ -31,26 +35,11 @@ public class Scoreboard {
 		return subSum;
 	}
 	
-	public int Sum() { //static List 추가해서 최적화시켜놨음.
+	public int getSum() { //static List 추가해서 최적화시켜놨음.
 		int sum = 0;
 		for (String x: Scoreboard.combList) {
 			if(scoreboard.get(x)>-1) sum += scoreboard.get(x);
 		}
-		return sum + (BonusSum() >= 63 ? 35 : 0);
-	}
-	
-	public boolean isMinusOne(String CombName) {
-		if (scoreboard.get(CombName)==-1) return true;
-		else return false;
-	}
-	
-	public void printScoreboard(MultipleDice Dices) {
-		for (String x: combList) {
-			System.out.printf("%-20s", x);
-			if(scoreboard.get(x)==-1) System.out.printf("%-5s", "-");
-			else System.out.printf("%-5d", scoreboard.get(x));
-			System.out.printf("%-5d\n", CombCal.Combination(Dices, x));
-		}
-	}
-	
+		return sum + (getBonusSum() >= 63 ? 35 : 0);
+	}	
 }
