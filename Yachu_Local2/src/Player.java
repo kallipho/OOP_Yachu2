@@ -42,7 +42,7 @@ public class Player extends GamePlayer{
 	
 	public boolean isValidComb(String CombName) {
 		for (String x: Scoreboard.combList) {
-			if(CombName.equals(x) && scoreboard.accessBoard(x)==-1) return true;
+			if(CombName.equals(x) && scoreboard.accessBoard(CombName)==-1) return true;
 			}
 		return false;
 	}
