@@ -1,24 +1,31 @@
 class GamePlayer {
 	protected String playerName;
 	protected Scoreboard scoreboard = new Scoreboard();
-	protected MultipleDice Dices = new MultipleDice();
+	protected Dice[] Dices = new Dice[5];
 	protected int rollNum = 2;
 	
 	GamePlayer(String Name) {
 		this.playerName = Name;
 		this.rollNum = 2;
+		for(int i=0; i<5; i++) {
+			Dices[i] = new Dice();
+		}
 	}
 	
-	public void doRoll() { //주사위를 굴림
+	public void reRoll() { //주사위를 굴림
 		if(rollNum>0) {
 			--rollNum;
-			Dices.doRollDices();
+			for(int i=0; i<5; i++) {
+				Dices[i].roll();
+			}
 		}
 	}
 	
 	public void startTurn() {
 		this.rollNum = 2;
-		Dices.setDefaultValue();
+		for(int i=0; i<5; i++) {
+			Dices[i].setDefaultValue();
+		}
 	}
 	
 	public void endTurn() {
