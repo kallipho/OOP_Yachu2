@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Cateogires {
+public class Categories {
 	static public int CountIntInArray(int[] Dice, int N) { // 배열 Dice 안 N의 개수를 세기
 		int cnt = 0;
 		for (int x: Dice) {
@@ -40,27 +40,27 @@ public class Cateogires {
 		}
 		switch(Comb) {
 		case "Ones":
-			return 1*Cateogires.CountIntInArray(intDice, 1);
+			return 1*Categories.CountIntInArray(intDice, 1);
 		case "Twos":
-			return 2*Cateogires.CountIntInArray(intDice, 2);
+			return 2*Categories.CountIntInArray(intDice, 2);
 		case "Threes":
-			return 3*Cateogires.CountIntInArray(intDice, 3);
+			return 3*Categories.CountIntInArray(intDice, 3);
 		case "Fours":
-			return 4*Cateogires.CountIntInArray(intDice, 4);
+			return 4*Categories.CountIntInArray(intDice, 4);
 		case "Fives":
-			return 5*Cateogires.CountIntInArray(intDice, 5);
+			return 5*Categories.CountIntInArray(intDice, 5);
 		case "Sixes":
-			return 6*Cateogires.CountIntInArray(intDice, 6);
+			return 6*Categories.CountIntInArray(intDice, 6);
 		case "Three of a kind":
-			if(Cateogires.CountMaxSameElement(intDice)>=3) {
-				return Cateogires.ArraySum(intDice);
+			if(Categories.CountMaxSameElement(intDice)>=3) {
+				return Categories.ArraySum(intDice);
 			}
 			else {
 				return 0;
 			}
 		case "Four of a kind":
-			if(Cateogires.CountMaxSameElement(intDice)>=4) {
-				return Cateogires.ArraySum(intDice);
+			if(Categories.CountMaxSameElement(intDice)>=4) {
+				return Categories.ArraySum(intDice);
 			}
 			else {
 				return 0;
@@ -90,9 +90,9 @@ public class Cateogires {
 				return 0;
 			}
 		case "Chance":
-			return Cateogires.ArraySum(intDice);
+			return Categories.ArraySum(intDice);
 		case "Yahtzee":
-			if(Cateogires.CountMaxSameElement(intDice)==5) {
+			if(Categories.CountMaxSameElement(intDice)==5) {
 				return 50;
 			}
 			else {

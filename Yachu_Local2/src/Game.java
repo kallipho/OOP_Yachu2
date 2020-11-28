@@ -187,7 +187,7 @@ public class Game extends Screen{
 	public void backRender() {
 		for(int i=0; i<13; i++) {
 			if(P.CheckBoard.AccessBoard(Scoreboard.Categories[i])!=-1) model.setValueAt("-", i, 1);
-			else model.setValueAt(ScoreToString(Cateogires.ScoreCalculator(P.Dices, Scoreboard.Categories[i])), i, 1);
+			else model.setValueAt(ScoreToString(Categories.ScoreCalculator(P.Dices, Scoreboard.Categories[i])), i, 1);
 			model.setValueAt(ScoreToString(P.CheckBoard.AccessBoard(Scoreboard.Categories[i])), i, 2);
 		}
 		

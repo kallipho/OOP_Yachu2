@@ -41,7 +41,7 @@ class GamePlayer {
 	}
 	
 	public void Check(String CombName) {
-		CheckBoard.Check(CombName, Cateogires.ScoreCalculator(Dices, CombName));
+		CheckBoard.Check(CombName, Categories.ScoreCalculator(Dices, CombName));
 	}
 }
 
