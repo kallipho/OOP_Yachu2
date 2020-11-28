@@ -28,10 +28,6 @@ class GamePlayer {
 		}
 	}
 	
-	public void endTurn() {
-		rollNum = 0;
-	}
-	
 	public int getRollNum() {
 		return rollNum;
 	}
@@ -59,6 +55,15 @@ public class Player extends GamePlayer{
 			if(scoreboard.accessBoard(x)==-1) return false;
 		}
 		return true;
+	}
+	
+	public void resetEverything(String Text) {
+		playerName = Text;
+		scoreboard = new Scoreboard();
+		for(int i=0; i<5; i++) {
+			Dices[i] = new Dice();
+		}
+		rollNum = 2;
 	}
 }
 

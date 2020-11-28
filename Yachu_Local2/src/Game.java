@@ -1,220 +1,350 @@
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
-public class Graphic{
-	Player p1 = new Player("Justin");
-	String CombText; GridBagConstraints CombGBC = new GridBagConstraints();
-	String PlayerScoreText; GridBagConstraints PlayerScoreGBC = new GridBagConstraints();
-	String EstimateScoreText; GridBagConstraints EstimateScoreGBC = new GridBagConstraints();
-	String PlayerScoreSumText; GridBagConstraints PlayerScoreSumGBC = new GridBagConstraints();
-	int[] DiceText = new int[5];
-	boolean[] ButtonColor = new boolean[5];
+public class Game{
+	Player P = new Player("Default Name");
+	String UserName;
 	
-	static Color OffC = Color.lightGray;
-	static Color OnC = Color.gray;
-	
-	Dimension dim = new Dimension(500, 500);
+	Dimension dim = new Dimension(400, 400);
 	JFrame frame = new JFrame("Yachu: Yahtzee made with Java");
 	
-	JLabel CombLabel = new JLabel();
-	JLabel PlayerScoreLabel = new JLabel();
-	JLabel EstimateScoreLabel = new JLabel();
-	JLabel PlayerScoreSumLabel = new JLabel();
-	JLabel PScoreLabel = new JLabel();
-	JLabel EScoreLabel = new JLabel();
-	String ETCText; JLabel ETCLabel = new JLabel(); GridBagConstraints ETCGBC = new GridBagConstraints();
-	JButton button1 = new JButton(); GridBagConstraints button1GBC = new GridBagConstraints();
-	JButton button2 = new JButton(); GridBagConstraints button2GBC = new GridBagConstraints();
-	JButton button3 = new JButton(); GridBagConstraints button3GBC = new GridBagConstraints();
-	JButton button4 = new JButton(); GridBagConstraints button4GBC = new GridBagConstraints();
-	JButton button5 = new JButton(); GridBagConstraints button5GBC = new GridBagConstraints();
-	JButton button6 = new JButton(); GridBagConstraints button6GBC = new GridBagConstraints();
-	JButton button7 = new JButton(); GridBagConstraints button7GBC = new GridBagConstraints();
-	JButton button8 = new JButton(); GridBagConstraints button8GBC = new GridBagConstraints();
-	JTextField textfield = new JTextField(); GridBagConstraints FieldGBC = new GridBagConstraints();
+	String PlayerNameText; GridBagConstraints PlayerNameGBC = new GridBagConstraints(); JLabel PlayerNameLabel = new JLabel();
+	String ScoreboardHeaderText[]; String[][] ScoreboardContentText; GridBagConstraints ScoreboardGBC = new GridBagConstraints(); DefaultTableModel model; JTable ScoreboardTable;
+	String ScoreText; GridBagConstraints ScoreGBC = new GridBagConstraints(); JLabel ScoreLabel = new JLabel();
+	String[] DiceText = new String[5]; Color[] DiceColor = new Color[5]; ActionListener[] DiceActionListener = new ActionListener[5];GridBagConstraints[] DiceGBC = new GridBagConstraints[5]; JButton[] DiceButton = new JButton[5];
+	String RollButtonText; GridBagConstraints RollButtonGBC = new GridBagConstraints(); JButton RollButton = new JButton();
+	String SubmitButtonText; GridBagConstraints SubmitButtonGBC = new GridBagConstraints(); JButton SubmitButton = new JButton();
+	GridBagConstraints InputFieldGBC = new GridBagConstraints(); JTextField InputField = new JTextField(); 
 	
-	public void runBackRender() {
-		CombGBC.fill = GridBagConstraints.HORIZONTAL; CombGBC.gridx = 0; CombGBC.gridy = 0; CombGBC.gridwidth = 3; CombGBC.gridheight = 7;
-		PlayerScoreGBC.fill = GridBagConstraints.HORIZONTAL;PlayerScoreGBC.gridx = 3; PlayerScoreGBC.gridy = 0; PlayerScoreGBC.gridwidth = 3; PlayerScoreGBC.gridheight = 7;
-		EstimateScoreGBC.fill = GridBagConstraints.HORIZONTAL;EstimateScoreGBC.gridx = 6; EstimateScoreGBC.gridy = 0; EstimateScoreGBC.gridwidth = 3; EstimateScoreGBC.gridheight = 7;
-			
-		button1GBC.gridx = 1; button1GBC.gridy = 8; button1GBC.gridwidth = 1; button1GBC.gridheight = 1;
-		button1.addActionListener(new ActionListener() {
+	Game(){
+		//»ý¼ºÀÚ
+	}
+	
+	public String ScoreToString(int n) {
+		if(n==-1) return "-";
+		else return Integer.toString(n);
+	}
+	
+	public void DiceActionListenerRender() {
+		DiceActionListener[0] = new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				p1.Dices.reverseSelectedDice(0);
-				runUpdateRender();
+				P.Dices[0].reverseLock();
+				backRender();
+				frontRender();
+			}
+		};
+		DiceActionListener[1] = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				P.Dices[1].reverseLock();
+				backRender();
+				frontRender();
+			}
+		};
+		DiceActionListener[2] = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				P.Dices[2].reverseLock();
+				backRender();
+				frontRender();
+			}
+		};
+		DiceActionListener[3] = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				P.Dices[3].reverseLock();
+				backRender();
+				frontRender();
+			}
+		};
+		DiceActionListener[4] = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				P.Dices[4].reverseLock();
+				backRender();
+				frontRender();
+			}
+		};
+	}
+	
+	public void initialRender() {
+		
+		PlayerNameGBC.fill = GridBagConstraints.HORIZONTAL; PlayerNameGBC.gridx = 3; PlayerNameGBC.gridy = 0; PlayerNameGBC.gridwidth = 2; PlayerNameGBC.gridheight = 1;
+		ScoreboardGBC.fill = GridBagConstraints.HORIZONTAL; ScoreboardGBC.gridx = 0; ScoreboardGBC.gridy = 1; ScoreboardGBC.gridwidth = 6; ScoreboardGBC.gridheight = 6;
+		ScoreGBC.fill = GridBagConstraints.HORIZONTAL; ScoreGBC.gridx = 0; ScoreGBC.gridy = 7; ScoreGBC.gridwidth = 6; ScoreGBC.gridheight = 1;
+		for(int i=0; i<5; i++) {
+			DiceGBC[i] = new GridBagConstraints();
+			DiceGBC[i].fill = GridBagConstraints.HORIZONTAL; DiceGBC[i].gridx = i; DiceGBC[i].gridy = 8; DiceGBC[i].gridwidth = 1; DiceGBC[i].gridheight = 1;
+		}
+		RollButtonGBC.fill = GridBagConstraints.HORIZONTAL; RollButtonGBC.gridx = 5; RollButtonGBC.gridy = 8; RollButtonGBC.gridwidth = 1; RollButtonGBC.gridheight = 1;
+		InputFieldGBC.fill = GridBagConstraints.HORIZONTAL; InputFieldGBC.gridx = 0; InputFieldGBC.gridy = 9; InputFieldGBC.gridwidth = 5; InputFieldGBC.gridheight = 1;
+		SubmitButtonGBC.fill = GridBagConstraints.HORIZONTAL; SubmitButtonGBC.gridx = 5; SubmitButtonGBC.gridy = 9; SubmitButtonGBC.gridwidth = 1; SubmitButtonGBC.gridheight = 1;
+		
+		PlayerNameText = P.playerName;
+		
+		ScoreboardHeaderText = new String[3];
+		ScoreboardHeaderText[0] = "Combination";
+		ScoreboardHeaderText[1] = "Estimate";
+		ScoreboardHeaderText[2] = "Checked";
+		
+		ScoreboardContentText = new String[13][3];
+		for(int i=0; i<13; i++) {
+			ScoreboardContentText[i][0] = Scoreboard.combList[i];
+			ScoreboardContentText[i][1] = "-";
+			ScoreboardContentText[i][2] = "-";
+		}
+		model = new DefaultTableModel(ScoreboardContentText, ScoreboardHeaderText);
+		ScoreboardTable = new JTable(model);
+		
+		ScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		for(int i=0; i<5; i++) {
+			DiceButton[i] = new JButton();
+			DiceActionListenerRender();
+			DiceButton[i].addActionListener(DiceActionListener[i]);
+		}
+		
+		RollButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				P.reRoll();
+				backRender();
+				frontRender();
 			}
 		});
 		
-		button2GBC.gridx = 2; button2GBC.gridy = 8; button2GBC.gridwidth = 1; button2GBC.gridheight = 1;
-		button2.addActionListener(new ActionListener() {
+		InputField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				p1.Dices.reverseSelectedDice(1);
-				runUpdateRender();
-			}
-		});
-		
-		button3GBC.gridx = 3; button3GBC.gridy = 8; button3GBC.gridwidth = 1; button3GBC.gridheight = 1;
-		button3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				p1.Dices.reverseSelectedDice(2);
-				runUpdateRender();
-			}
-		});
-		
-		button4GBC.gridx = 4; button4GBC.gridy = 8; button4GBC.gridwidth = 1; button4GBC.gridheight = 1;
-		button4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				p1.Dices.reverseSelectedDice(3);
-				runUpdateRender();
-			}
-		});
-		
-		button5GBC.gridx = 5; button5GBC.gridy = 8; button5GBC.gridwidth = 1; button5GBC.gridheight = 1;
-		button5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				p1.Dices.reverseSelectedDice(4);
-				runUpdateRender();
-			}
-		});
-		
-		button6.setText("Roll again");
-		button6GBC.gridx = 6; button6GBC.gridy = 8; button6GBC.gridwidth = 2; button6GBC.gridheight = 1;
-		button6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				p1.doRoll();
-				runUpdateRender();
-			}
-		});
-		
-		button7.setText("End turn");
-		button7GBC.gridx = 8; button7GBC.gridy = 8; button7GBC.gridwidth = 2; button7GBC.gridheight = 1;
-		button7.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				p1.endTurn();
-				textfield.setEnabled(true);
-				runUpdateRender();
-			}
-		});
-		
-		button8.setText("Submit");
-		button8GBC.gridx = 8; button8GBC.gridy = 9; button8GBC.gridwidth = 2; button8GBC.gridheight = 1;
-		button8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String UserInput = textfield.getText();
-				if(p1.isValidComb(UserInput)){
-					p1.doCheck(UserInput);
-					p1.startTurn();
-					textfield.setEnabled(false);
-					runUpdateRender();
+				String userInput = InputField.getText();
+				if(P.isValidComb(userInput)) {
+					P.doCheck(userInput);
+					if(P.isEnd()) {
+						frame.setVisible(false);
+						EndScreen();
+					}
+					P.startTurn();
+					InputField.setText("");
+					backRender();
+					frontRender();
 				}
 				else {
-					textfield.setText("");
+					InputField.setText("");
 				}
 			}
 		});
 		
-		ETCGBC.gridx = 1; ETCGBC.gridy = 7; ETCGBC.gridwidth = 7; ETCGBC.gridheight = 1;
-		FieldGBC.gridx = 1; FieldGBC.gridy = 9; FieldGBC.gridwidth = 7; FieldGBC.gridheight = 1;
-		textfield.setEnabled(false);
-		FieldGBC.fill = GridBagConstraints.HORIZONTAL;
+		SubmitButtonText = "Submit";
+		SubmitButton.setText(SubmitButtonText);
+		
+		SubmitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String userInput = InputField.getText();
+				if(P.isValidComb(userInput)) {
+					P.doCheck(userInput);
+					if(P.isEnd()) {
+						frame.setVisible(false);
+						EndScreen();
+					}
+					P.startTurn();
+					InputField.setText("");
+					backRender();
+					frontRender();
+				}
+				else {
+					InputField.setText("");
+				}
+			}
+		});
 	}
 	
-	public void runUpdateRender() {
-		CombText = "<html>";
-		for (String x: Scoreboard.combList) {
-			CombText += x + "<br/>";
+	public void backRender() {
+		for(int i=0; i<13; i++) {
+			if(P.scoreboard.accessBoard(Scoreboard.combList[i])!=-1) model.setValueAt("-", i, 1);
+			else model.setValueAt(ScoreToString(CombCal.Combination(P.Dices, Scoreboard.combList[i])), i, 1);
+			model.setValueAt(ScoreToString(P.scoreboard.accessBoard(Scoreboard.combList[i])), i, 2);
 		}
-		CombText += "</html>";
-		CombLabel.setText(CombText);
 		
-		PlayerScoreText = "<html>";
-		for (String x: Scoreboard.combList) {
-			PlayerScoreText += p1.scoreboard.accessBoard(x) + "<br/>";
+		ScoreText = String.format("Score : %d (Bonus: %d)", P.scoreboard.getSum(), P.scoreboard.getBonusSum());
+		
+		for(int i=0; i<5; i++) {
+			DiceText[i] = Integer.toString(P.Dices[i].getEye());
+			DiceColor[i] = P.Dices[i].getIsLock() ? Color.GRAY : Color.LIGHT_GRAY;
 		}
-		PlayerScoreText += "</html>";
 		
-		PScoreLabel.setHorizontalTextPosition(JLabel.CENTER);
-		PScoreLabel.setText(PlayerScoreText);
-		
-		EstimateScoreText = "<html>";
-		for (String x: Scoreboard.combList) {
-			EstimateScoreText += CombCal.Combination(p1.Dices, x) + "<br/>";
-		}
-		EstimateScoreText += "</html>";	
-		EScoreLabel.setText(EstimateScoreText);
-		GridBagConstraints EstimateScoreGBC = new GridBagConstraints();
-		
-		ETCText = String.format("%s : %d(Bonus: %d) / %d rolls left", p1.playerName, p1.scoreboard.getSum(), p1.scoreboard.getBonusSum(), p1.getRollNum());
-		ETCLabel.setText(ETCText);
-		
-		DiceText = p1.Dices.toIntDices();
-		ButtonColor = p1.Dices.toLockDices();
-		
-		button1.setText(Integer.toString(DiceText[0]));
-		if(ButtonColor[0]) button1.setBackground(OffC);
-		else button1.setBackground(OnC);
-		
-		button2.setText(Integer.toString(DiceText[1]));
-		if(ButtonColor[1]) button2.setBackground(OffC);
-		else button2.setBackground(OnC);
-		
-		button3.setText(Integer.toString(DiceText[2]));
-		if(ButtonColor[2]) button3.setBackground(OffC);
-		else button3.setBackground(OnC);
-		
-		button4.setText(Integer.toString(DiceText[3]));
-		if(ButtonColor[3]) button4.setBackground(OffC);
-		else button4.setBackground(OnC);
-		
-		button5.setText(Integer.toString(DiceText[4]));
-		if(ButtonColor[4]) button5.setBackground(OffC);
-		else button5.setBackground(OnC);
+		RollButtonText = String.format("%d Roll", P.getRollNum());
 	}
 	
-	public void runFrontRender() {
+	public void frontRender() {
+		PlayerNameLabel.setText(PlayerNameText);
+		ScoreLabel.setText(ScoreText);
+		for(int i=0; i<5; i++) {
+			DiceButton[i].setText(DiceText[i]);
+			DiceButton[i].setBackground(DiceColor[i]);
+		}
+		RollButton.setText(RollButtonText);
+	}
+	
+	public void initialBoot() {
 		frame.setLocation(0, 0);
 		frame.setPreferredSize(dim);
-		GridBagLayout gbl = new GridBagLayout();
-		frame.setLayout(gbl);
+		GridBagLayout GBL = new GridBagLayout();
+		frame.setLayout(GBL);
 		
-		frame.add(CombLabel, CombGBC);
-		frame.add(PScoreLabel, PlayerScoreGBC);
-		frame.add(EScoreLabel, EstimateScoreGBC);
-		frame.add(ETCLabel, ETCGBC);
-		frame.add(button1, button1GBC);
-		frame.add(button2, button2GBC);
-		frame.add(button3, button3GBC);
-		frame.add(button4, button4GBC);
-		frame.add(button5, button5GBC);
-		frame.add(button6, button6GBC);
-		frame.add(button7, button7GBC);
-		frame.add(textfield, FieldGBC);
-		frame.add(button8, button8GBC);
+		frame.add(PlayerNameLabel, PlayerNameGBC);
+		frame.add(ScoreboardTable, ScoreboardGBC);
+		frame.add(ScoreLabel, ScoreGBC);
+		for(int i=0; i<5; i++) {
+			frame.add(DiceButton[i], DiceGBC[i]);
+		}
+		frame.add(RollButton, RollButtonGBC);
+		frame.add(InputField, InputFieldGBC);
+		frame.add(SubmitButton, SubmitButtonGBC);
 		
 		frame.pack();
 		frame.setVisible(true);
 	}
 	
-	public void run() {
-		p1.startTurn();
-		runBackRender();
-		runUpdateRender();
-		runFrontRender();
+	public void MainScreen() {
+		JFrame MainFrame = new JFrame("Yachu: Yahtzee made with Java");
+		GridBagLayout MainGBL = new GridBagLayout();
+		MainFrame.setLayout(MainGBL);
+		MainFrame.setPreferredSize(dim);
+		
+		JLabel title = new JLabel("Yachu");
+		title.setFont(title.getFont().deriveFont(20f));
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints TitleGBC = new GridBagConstraints();
+		TitleGBC.fill = GridBagConstraints.HORIZONTAL;TitleGBC.gridx=0; TitleGBC.gridy=0; TitleGBC.gridwidth=5; TitleGBC.gridheight=2; 
+		
+		JTextField NameField = new JTextField();
+		NameField.setToolTipText("Input your name here");
+		NameField.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints NameGBC = new GridBagConstraints();
+		NameGBC.fill = GridBagConstraints.HORIZONTAL; NameGBC.gridx=1; NameGBC.gridy=2; NameGBC.gridwidth=3; TitleGBC.gridheight=1; 
+		JButton StartButton = new JButton("Start");
+		StartButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserName = NameField.getText();
+				MainFrame.setVisible(false);
+				RunGame(UserName);
+			}
+		});
+		StartButton.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints StartGBC = new GridBagConstraints();
+		StartGBC.gridx=1; StartGBC.gridy=3; StartGBC.gridwidth=3; StartGBC.gridheight=1; 
+
+		JButton HelpButton = new JButton("Help");
+		HelpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				    try {
+						Desktop.getDesktop().browse(new URI("https://en.wikipedia.org/wiki/Yahtzee"));
+					} catch (IOException | URISyntaxException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		HelpButton.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints HelpGBC = new GridBagConstraints();
+		HelpGBC.gridx=1; HelpGBC.gridy=4; HelpGBC.gridwidth=3; HelpGBC.gridheight=1; 
+		
+
+		JButton GithubButton = new JButton("Github");
+		GithubButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				    try {
+						Desktop.getDesktop().browse(new URI("https://github.com/kallipho/OOP_Yachu2"));
+					} catch (IOException | URISyntaxException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		GithubButton.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints GithubGBC = new GridBagConstraints();
+		GithubGBC.gridx=1; GithubGBC.gridy=5; GithubGBC.gridwidth=3; GithubGBC.gridheight=1; 
+		
+		MainFrame.add(title, TitleGBC);
+		MainFrame.add(NameField, NameGBC);
+		MainFrame.add(StartButton, StartGBC);
+		MainFrame.add(HelpButton, HelpGBC);
+		MainFrame.add(GithubButton, GithubGBC);
+		MainFrame.pack();
+		MainFrame.setVisible(true);
+	}
+	
+	public void EndScreen() {
+		JFrame MainFrame = new JFrame("Yachu: Yahtzee made with Java");
+		GridBagLayout MainGBL = new GridBagLayout();
+		MainFrame.setLayout(MainGBL);
+		MainFrame.setPreferredSize(dim);
+		
+		JLabel title = new JLabel(String.format("You scored %d", P.scoreboard.getSum()));
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints TitleGBC = new GridBagConstraints();
+		TitleGBC.gridx=0; TitleGBC.gridy=0; TitleGBC.gridwidth=5; TitleGBC.gridheight=2; 
+		
+		JButton MoreButton = new JButton("Play again");
+		MoreButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame = new JFrame("Yachu: Yahtzee made with Java");
+				MainFrame.setVisible(false);
+				RunGame(UserName);
+			}
+		});
+		MoreButton.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints MoreGBC = new GridBagConstraints();
+		MoreGBC.gridx=1; MoreGBC.gridy=2; MoreGBC.gridwidth=3; MoreGBC.gridheight=1; 
+
+		JButton ExitButton = new JButton("Exit");
+		ExitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainFrame.setVisible(false);
+			}
+		});
+		ExitButton.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints ExitGBC = new GridBagConstraints();
+		ExitGBC.gridx=1; ExitGBC.gridy=3; ExitGBC.gridwidth=3; ExitGBC.gridheight=1; 
+		
+		MainFrame.add(title, TitleGBC);
+		MainFrame.add(MoreButton, MoreGBC);
+		MainFrame.add(ExitButton, ExitGBC);
+		MainFrame.pack();
+		MainFrame.setVisible(true);
+	}
+	
+	public void RunGame(String Text) {
+		P.resetEverything(Text);
+		P.startTurn();
+		initialRender();
+		backRender();
+		frontRender();
+		initialBoot();
 	}
 	
 	public static void main(String[] args) {
-		Graphic g = new Graphic();
-		g.run();
+		Game G = new Game();
+		G.MainScreen();
 	}
 }
