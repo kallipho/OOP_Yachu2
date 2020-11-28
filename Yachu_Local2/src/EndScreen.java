@@ -29,9 +29,10 @@ public class EndScreen implements Screen{
 		MainFrame.setLayout(MainGBL);
 		MainFrame.setPreferredSize(ScreenSize);
 		
-		title.setText(String.format("You scored %d", Score));
+		title.setText(String.format("You scored %d!", Score));
+		title.setFont(title.getFont().deriveFont(30f));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		TitleGBC.gridx=0; TitleGBC.gridy=0; TitleGBC.gridwidth=5; TitleGBC.gridheight=2; 
+		TitleGBC.gridx=0; TitleGBC.gridy=0; TitleGBC.gridwidth=3; TitleGBC.gridheight=2; 
 		
 		MoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
