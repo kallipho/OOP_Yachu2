@@ -1,8 +1,8 @@
 public class Player {
-	protected String Name;
+	private String Name;
 	protected CheckBoard CheckBoard = new CheckBoard();
 	protected Dice[] Dices = new Dice[5];
-	protected int RollsLeft = 2;
+	private int RollsLeft = 2;
 	
 	Player(){
 		this.Name = "Anonymous";
@@ -18,6 +18,14 @@ public class Player {
 		for(int i=0; i<5; i++) {
 			Dices[i] = new Dice();
 		}
+	}
+	
+	public void SetName(String Name) {
+		this.Name = Name;
+	}
+	
+	public String GetName() {
+		return Name;
 	}
 	
 	public void ReRoll() { //주사위를 굴림

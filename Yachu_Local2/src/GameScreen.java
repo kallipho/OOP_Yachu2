@@ -28,7 +28,7 @@ public class GameScreen implements Screen{
 	GridBagConstraints InputFieldGBC = new GridBagConstraints(); JTextField InputField = new JTextField(); 
 	
 	GameScreen(String Name){
-		this.P.Name = Name;
+		P.SetName(Name);
 	}
 	
 	public void DiceActionListenerRender() {
@@ -84,7 +84,7 @@ public class GameScreen implements Screen{
 		InputFieldGBC.fill = GridBagConstraints.HORIZONTAL; InputFieldGBC.gridx = 0; InputFieldGBC.gridy = 9; InputFieldGBC.gridwidth = 5; InputFieldGBC.gridheight = 1;
 		SubmitButtonGBC.fill = GridBagConstraints.HORIZONTAL; SubmitButtonGBC.gridx = 5; SubmitButtonGBC.gridy = 9; SubmitButtonGBC.gridwidth = 1; SubmitButtonGBC.gridheight = 1;
 		
-		PlayerNameText = P.Name;
+		PlayerNameText = P.GetName();
 		
 		ScoreboardHeaderText = new String[3];
 		ScoreboardHeaderText[0] = "Combination";
@@ -122,7 +122,7 @@ public class GameScreen implements Screen{
 					P.Check(userInput);
 					if(P.IsGameEnd()) {
 						GameScreen.setVisible(false);
-						EndScreen S = new EndScreen(P.Name, P.CheckBoard.GetSum());
+						EndScreen S = new EndScreen(P.GetName(), P.CheckBoard.GetSum());
 						S.OpenScreen();
 					}
 					P.StartTurn();
@@ -145,7 +145,7 @@ public class GameScreen implements Screen{
 					P.Check(userInput);
 					if(P.IsGameEnd()) {
 						GameScreen.setVisible(false);
-						EndScreen S = new EndScreen(P.Name, P.CheckBoard.GetSum());
+						EndScreen S = new EndScreen(P.GetName(), P.CheckBoard.GetSum());
 						S.OpenScreen();
 					}
 					P.StartTurn();
