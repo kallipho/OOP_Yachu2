@@ -91,6 +91,7 @@ public class MainScreen implements Screen{
 	public void FrontRender() {
 		MainFrame.setLayout(MainGBL);
 		MainFrame.setPreferredSize(ScreenSize);
+		MainFrame.setLocationRelativeTo(null);
 		
 		MainFrame.add(title, TitleGBC);
 		MainFrame.add(subtitle, SubTitleGBC);

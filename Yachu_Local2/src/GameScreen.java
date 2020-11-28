@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class GameScreen implements Screen{
 	Player P = new Player("Default Name");
-	JFrame GameScreen = new JFrame("Yachu: Yahtzee made with Java");
+	JFrame MainFrame = new JFrame("Yachu: Yahtzee made with Java");
 	GridBagLayout GBL = new GridBagLayout();
 	
 	
@@ -70,8 +70,9 @@ public class GameScreen implements Screen{
 	}
 	
 	public void BackRender() {
-		GameScreen.setPreferredSize(ScreenSize);
-		GameScreen.setLayout(GBL);
+		MainFrame.setPreferredSize(ScreenSize);
+		MainFrame.setLayout(GBL);
+		MainFrame.setLocationRelativeTo(null);
 		
 		PlayerNameGBC.fill = GridBagConstraints.HORIZONTAL; PlayerNameGBC.gridx = 3; PlayerNameGBC.gridy = 0; PlayerNameGBC.gridwidth = 2; PlayerNameGBC.gridheight = 1;
 		ScoreboardGBC.fill = GridBagConstraints.HORIZONTAL; ScoreboardGBC.gridx = 0; ScoreboardGBC.gridy = 1; ScoreboardGBC.gridwidth = 6; ScoreboardGBC.gridheight = 6;
@@ -121,7 +122,7 @@ public class GameScreen implements Screen{
 				if(P.IsValidCategory(userInput)) {
 					P.Check(userInput);
 					if(P.IsGameEnd()) {
-						GameScreen.setVisible(false);
+						MainFrame.setVisible(false);
 						EndScreen S = new EndScreen(P.GetName(), P.CheckBoard.GetSum());
 						S.OpenScreen();
 					}
@@ -144,7 +145,7 @@ public class GameScreen implements Screen{
 				if(P.IsValidCategory(userInput)) {
 					P.Check(userInput);
 					if(P.IsGameEnd()) {
-						GameScreen.setVisible(false);
+						MainFrame.setVisible(false);
 						EndScreen S = new EndScreen(P.GetName(), P.CheckBoard.GetSum());
 						S.OpenScreen();
 					}
@@ -187,22 +188,22 @@ public class GameScreen implements Screen{
 	}
 	
 	public void FrontRender() {
-		GameScreen.add(PlayerNameLabel, PlayerNameGBC);
-		GameScreen.add(ScoreboardTable, ScoreboardGBC);
-		GameScreen.add(ScoreLabel, ScoreGBC);
+		MainFrame.add(PlayerNameLabel, PlayerNameGBC);
+		MainFrame.add(ScoreboardTable, ScoreboardGBC);
+		MainFrame.add(ScoreLabel, ScoreGBC);
 		for(int i=0; i<5; i++) {
-			GameScreen.add(DiceButton[i], DiceGBC[i]);
+			MainFrame.add(DiceButton[i], DiceGBC[i]);
 		}
-		GameScreen.add(RollButton, RollButtonGBC);
-		GameScreen.add(InputField, InputFieldGBC);
-		GameScreen.add(SubmitButton, SubmitButtonGBC);
+		MainFrame.add(RollButton, RollButtonGBC);
+		MainFrame.add(InputField, InputFieldGBC);
+		MainFrame.add(SubmitButton, SubmitButtonGBC);
 	}
 	
 	public void OpenScreen() {
 		BackRender();
 		FrontRender();
-		GameScreen.pack();
-		GameScreen.setVisible(true);
+		MainFrame.pack();
+		MainFrame.setVisible(true);
 	}
 	
 	public static String ScoreToString(int n) {

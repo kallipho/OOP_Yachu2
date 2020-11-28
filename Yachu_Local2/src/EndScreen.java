@@ -28,6 +28,7 @@ public class EndScreen implements Screen{
 	public void BackRender() {
 		MainFrame.setLayout(MainGBL);
 		MainFrame.setPreferredSize(ScreenSize);
+		MainFrame.setLocationRelativeTo(null);
 		
 		title.setText(String.format("You scored %d!", Score));
 		title.setFont(title.getFont().deriveFont(30f));
