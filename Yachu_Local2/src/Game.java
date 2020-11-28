@@ -20,12 +20,20 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class Game{
+abstract class Screen{
+	Dimension ScreenSize;
+	JFrame Screen;
+	public void MainScreen() {}
+	public void GameScreen() {}
+	public void EndScreen() {}
+}
+
+public class Game extends Screen{
 	Player P = new Player("Default Name");
 	String UserName;
 	
-	Dimension dim = new Dimension(400, 400);
-	JFrame frame = new JFrame("Yachu: Yahtzee made with Java");
+	Dimension ScreenSize = new Dimension(400, 400);
+	JFrame GameScreen = new JFrame("Yachu: Yahtzee made with Java");
 	
 	String PlayerNameText; GridBagConstraints PlayerNameGBC = new GridBagConstraints(); JLabel PlayerNameLabel = new JLabel();
 	String ScoreboardHeaderText[]; String[][] ScoreboardContentText; GridBagConstraints ScoreboardGBC = new GridBagConstraints(); DefaultTableModel model; JTable ScoreboardTable;
@@ -48,7 +56,7 @@ public class Game{
 		DiceActionListener[0] = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				P.Dices[0].reverseLock();
+				P.Dices[0].ReverseLock();
 				backRender();
 				frontRender();
 			}
@@ -56,7 +64,7 @@ public class Game{
 		DiceActionListener[1] = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				P.Dices[1].reverseLock();
+				P.Dices[1].ReverseLock();
 				backRender();
 				frontRender();
 			}
@@ -64,7 +72,7 @@ public class Game{
 		DiceActionListener[2] = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				P.Dices[2].reverseLock();
+				P.Dices[2].ReverseLock();
 				backRender();
 				frontRender();
 			}
@@ -72,7 +80,7 @@ public class Game{
 		DiceActionListener[3] = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				P.Dices[3].reverseLock();
+				P.Dices[3].ReverseLock();
 				backRender();
 				frontRender();
 			}
@@ -80,7 +88,7 @@ public class Game{
 		DiceActionListener[4] = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				P.Dices[4].reverseLock();
+				P.Dices[4].ReverseLock();
 				backRender();
 				frontRender();
 			}
@@ -100,7 +108,7 @@ public class Game{
 		InputFieldGBC.fill = GridBagConstraints.HORIZONTAL; InputFieldGBC.gridx = 0; InputFieldGBC.gridy = 9; InputFieldGBC.gridwidth = 5; InputFieldGBC.gridheight = 1;
 		SubmitButtonGBC.fill = GridBagConstraints.HORIZONTAL; SubmitButtonGBC.gridx = 5; SubmitButtonGBC.gridy = 9; SubmitButtonGBC.gridwidth = 1; SubmitButtonGBC.gridheight = 1;
 		
-		PlayerNameText = P.playerName;
+		PlayerNameText = P.Name;
 		
 		ScoreboardHeaderText = new String[3];
 		ScoreboardHeaderText[0] = "Combination";
@@ -109,7 +117,7 @@ public class Game{
 		
 		ScoreboardContentText = new String[13][3];
 		for(int i=0; i<13; i++) {
-			ScoreboardContentText[i][0] = Scoreboard.combList[i];
+			ScoreboardContentText[i][0] = Scoreboard.Categories[i];
 			ScoreboardContentText[i][1] = "-";
 			ScoreboardContentText[i][2] = "-";
 		}
@@ -126,7 +134,7 @@ public class Game{
 		
 		RollButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				P.reRoll();
+				P.ReRoll();
 				backRender();
 				frontRender();
 			}
@@ -135,13 +143,13 @@ public class Game{
 		InputField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String userInput = InputField.getText();
-				if(P.isValidComb(userInput)) {
-					P.doCheck(userInput);
-					if(P.isEnd()) {
-						frame.setVisible(false);
+				if(P.IsValidCategory(userInput)) {
+					P.Check(userInput);
+					if(P.IsGameEnd()) {
+						GameScreen.setVisible(false);
 						EndScreen();
 					}
-					P.startTurn();
+					P.StartTurn();
 					InputField.setText("");
 					backRender();
 					frontRender();
@@ -158,13 +166,13 @@ public class Game{
 		SubmitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String userInput = InputField.getText();
-				if(P.isValidComb(userInput)) {
-					P.doCheck(userInput);
-					if(P.isEnd()) {
-						frame.setVisible(false);
+				if(P.IsValidCategory(userInput)) {
+					P.Check(userInput);
+					if(P.IsGameEnd()) {
+						GameScreen.setVisible(false);
 						EndScreen();
 					}
-					P.startTurn();
+					P.StartTurn();
 					InputField.setText("");
 					backRender();
 					frontRender();
@@ -178,19 +186,19 @@ public class Game{
 	
 	public void backRender() {
 		for(int i=0; i<13; i++) {
-			if(P.scoreboard.accessBoard(Scoreboard.combList[i])!=-1) model.setValueAt("-", i, 1);
-			else model.setValueAt(ScoreToString(CombCal.Combination(P.Dices, Scoreboard.combList[i])), i, 1);
-			model.setValueAt(ScoreToString(P.scoreboard.accessBoard(Scoreboard.combList[i])), i, 2);
+			if(P.CheckBoard.AccessBoard(Scoreboard.Categories[i])!=-1) model.setValueAt("-", i, 1);
+			else model.setValueAt(ScoreToString(Cateogires.ScoreCalculator(P.Dices, Scoreboard.Categories[i])), i, 1);
+			model.setValueAt(ScoreToString(P.CheckBoard.AccessBoard(Scoreboard.Categories[i])), i, 2);
 		}
 		
-		ScoreText = String.format("Score : %d (Bonus: %d)", P.scoreboard.getSum(), P.scoreboard.getBonusSum());
+		ScoreText = String.format("Score : %d (Bonus: %d)", P.CheckBoard.GetSum(), P.CheckBoard.GetBonusSum());
 		
 		for(int i=0; i<5; i++) {
-			DiceText[i] = Integer.toString(P.Dices[i].getEye());
-			DiceColor[i] = P.Dices[i].getIsLock() ? Color.GRAY : Color.LIGHT_GRAY;
+			DiceText[i] = Integer.toString(P.Dices[i].GetEye());
+			DiceColor[i] = P.Dices[i].GetIsLock() ? Color.GRAY : Color.LIGHT_GRAY;
 		}
 		
-		RollButtonText = String.format("%d Roll", P.getRollNum());
+		RollButtonText = String.format("%d Roll", P.GetRollsLeft());
 	}
 	
 	public void frontRender() {
@@ -204,30 +212,30 @@ public class Game{
 	}
 	
 	public void initialBoot() {
-		frame.setLocation(0, 0);
-		frame.setPreferredSize(dim);
+		GameScreen.setLocation(0, 0);
+		GameScreen.setPreferredSize(ScreenSize);
 		GridBagLayout GBL = new GridBagLayout();
-		frame.setLayout(GBL);
+		GameScreen.setLayout(GBL);
 		
-		frame.add(PlayerNameLabel, PlayerNameGBC);
-		frame.add(ScoreboardTable, ScoreboardGBC);
-		frame.add(ScoreLabel, ScoreGBC);
+		GameScreen.add(PlayerNameLabel, PlayerNameGBC);
+		GameScreen.add(ScoreboardTable, ScoreboardGBC);
+		GameScreen.add(ScoreLabel, ScoreGBC);
 		for(int i=0; i<5; i++) {
-			frame.add(DiceButton[i], DiceGBC[i]);
+			GameScreen.add(DiceButton[i], DiceGBC[i]);
 		}
-		frame.add(RollButton, RollButtonGBC);
-		frame.add(InputField, InputFieldGBC);
-		frame.add(SubmitButton, SubmitButtonGBC);
+		GameScreen.add(RollButton, RollButtonGBC);
+		GameScreen.add(InputField, InputFieldGBC);
+		GameScreen.add(SubmitButton, SubmitButtonGBC);
 		
-		frame.pack();
-		frame.setVisible(true);
+		GameScreen.pack();
+		GameScreen.setVisible(true);
 	}
 	
 	public void MainScreen() {
 		JFrame MainFrame = new JFrame("Yachu: Yahtzee made with Java");
 		GridBagLayout MainGBL = new GridBagLayout();
 		MainFrame.setLayout(MainGBL);
-		MainFrame.setPreferredSize(dim);
+		MainFrame.setPreferredSize(ScreenSize);
 		
 		JLabel title = new JLabel("Yachu");
 		title.setFont(title.getFont().deriveFont(20f));
@@ -245,7 +253,7 @@ public class Game{
 			public void actionPerformed(ActionEvent e) {
 				UserName = NameField.getText();
 				MainFrame.setVisible(false);
-				RunGame(UserName);
+				GameScreen(UserName);
 			}
 		});
 		StartButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -298,9 +306,9 @@ public class Game{
 		JFrame MainFrame = new JFrame("Yachu: Yahtzee made with Java");
 		GridBagLayout MainGBL = new GridBagLayout();
 		MainFrame.setLayout(MainGBL);
-		MainFrame.setPreferredSize(dim);
+		MainFrame.setPreferredSize(ScreenSize);
 		
-		JLabel title = new JLabel(String.format("You scored %d", P.scoreboard.getSum()));
+		JLabel title = new JLabel(String.format("You scored %d", P.CheckBoard.GetSum()));
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints TitleGBC = new GridBagConstraints();
 		TitleGBC.gridx=0; TitleGBC.gridy=0; TitleGBC.gridwidth=5; TitleGBC.gridheight=2; 
@@ -308,9 +316,9 @@ public class Game{
 		JButton MoreButton = new JButton("Play again");
 		MoreButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame = new JFrame("Yachu: Yahtzee made with Java");
+				GameScreen = new JFrame("Yachu: Yahtzee made with Java");
 				MainFrame.setVisible(false);
-				RunGame(UserName);
+				GameScreen(UserName);
 			}
 		});
 		MoreButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -334,9 +342,8 @@ public class Game{
 		MainFrame.setVisible(true);
 	}
 	
-	public void RunGame(String Text) {
-		P.resetEverything(Text);
-		P.startTurn();
+	public void GameScreen(String Text) {
+		P.StartNewGame(Text);
 		initialRender();
 		backRender();
 		frontRender();

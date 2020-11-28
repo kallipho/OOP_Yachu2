@@ -1,39 +1,47 @@
 class GamePlayer {
-	protected String playerName;
-	protected Scoreboard scoreboard = new Scoreboard();
+	protected String Name;
+	protected Scoreboard CheckBoard = new Scoreboard();
 	protected Dice[] Dices = new Dice[5];
-	protected int rollNum = 2;
+	protected int RollsLeft = 2;
 	
-	GamePlayer(String Name) {
-		this.playerName = Name;
-		this.rollNum = 2;
+	GamePlayer(){
+		this.Name = "Anonymous";
+		this.RollsLeft = 2;
 		for(int i=0; i<5; i++) {
 			Dices[i] = new Dice();
 		}
 	}
 	
-	public void reRoll() { //주사위를 굴림
-		if(rollNum>0) {
-			--rollNum;
+	GamePlayer(String Name) {
+		this.Name = Name;
+		this.RollsLeft = 2;
+		for(int i=0; i<5; i++) {
+			Dices[i] = new Dice();
+		}
+	}
+	
+	public void ReRoll() { //주사위를 굴림
+		if(RollsLeft>0) {
+			--RollsLeft;
 			for(int i=0; i<5; i++) {
-				Dices[i].roll();
+				Dices[i].Roll();
 			}
 		}
 	}
 	
-	public void startTurn() {
-		this.rollNum = 2;
+	public void StartTurn() {
+		this.RollsLeft = 2;
 		for(int i=0; i<5; i++) {
-			Dices[i].setDefaultValue();
+			Dices[i].SetDefault();
 		}
 	}
 	
-	public int getRollNum() {
-		return rollNum;
+	public int GetRollsLeft() {
+		return RollsLeft;
 	}
 	
-	public void doCheck(String CombName) {
-		scoreboard.doCheck(CombName, CombCal.Combination(Dices, CombName));
+	public void Check(String CombName) {
+		CheckBoard.Check(CombName, Cateogires.ScoreCalculator(Dices, CombName));
 	}
 }
 
@@ -43,27 +51,27 @@ public class Player extends GamePlayer{
 			super(Name);
 	}
 	
-	public boolean isValidComb(String CombName) {
-		for (String x: Scoreboard.combList) {
-			if(CombName.equals(x) && scoreboard.accessBoard(CombName)==-1) return true;
+	public boolean IsValidCategory(String CombName) {
+		for (String x: Scoreboard.Categories) {
+			if(CombName.equals(x) && CheckBoard.AccessBoard(CombName)==-1) return true;
 			}
 		return false;
 	}
 	
-	public boolean isEnd() {
-		for (String x: Scoreboard.combList) {
-			if(scoreboard.accessBoard(x)==-1) return false;
+	public boolean IsGameEnd() {
+		for (String x: Scoreboard.Categories) {
+			if(CheckBoard.AccessBoard(x)==-1) return false;
 		}
 		return true;
 	}
 	
-	public void resetEverything(String Text) {
-		playerName = Text;
-		scoreboard = new Scoreboard();
+	public void StartNewGame(String Text) {
+		Name = Text;
+		CheckBoard = new Scoreboard();
 		for(int i=0; i<5; i++) {
 			Dices[i] = new Dice();
 		}
-		rollNum = 2;
+		RollsLeft = 2;
 	}
 }
 
