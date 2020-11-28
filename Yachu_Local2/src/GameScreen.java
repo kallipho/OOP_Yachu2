@@ -93,7 +93,7 @@ public class GameScreen implements Screen{
 		
 		ScoreboardContentText = new String[13][3];
 		for(int i=0; i<13; i++) {
-			ScoreboardContentText[i][0] = Scoreboard.Categories[i];
+			ScoreboardContentText[i][0] = CheckBoard.Categories[i];
 			ScoreboardContentText[i][1] = "-";
 			ScoreboardContentText[i][2] = "-";
 		}
@@ -163,9 +163,9 @@ public class GameScreen implements Screen{
 	
 	public void PeriodicRender() {
 		for(int i=0; i<13; i++) {
-			if(P.CheckBoard.AccessBoard(Scoreboard.Categories[i])!=-1) model.setValueAt("-", i, 1);
-			else model.setValueAt(ScoreToString(Categories.ScoreCalculator(P.Dices, Scoreboard.Categories[i])), i, 1);
-			model.setValueAt(ScoreToString(P.CheckBoard.AccessBoard(Scoreboard.Categories[i])), i, 2);
+			if(P.CheckBoard.AccessBoard(CheckBoard.Categories[i])!=-1) model.setValueAt("-", i, 1);
+			else model.setValueAt(ScoreToString(Categories.ScoreCalculator(P.Dices, CheckBoard.Categories[i])), i, 1);
+			model.setValueAt(ScoreToString(P.CheckBoard.AccessBoard(CheckBoard.Categories[i])), i, 2);
 		}
 		
 		ScoreText = String.format("Score : %d (Bonus: %d)", P.CheckBoard.GetSum(), P.CheckBoard.GetBonusSum());

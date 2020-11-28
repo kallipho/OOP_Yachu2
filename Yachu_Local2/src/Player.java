@@ -1,6 +1,6 @@
 class GamePlayer {
 	protected String Name;
-	protected Scoreboard CheckBoard = new Scoreboard();
+	protected CheckBoard CheckBoard = new CheckBoard();
 	protected Dice[] Dices = new Dice[5];
 	protected int RollsLeft = 2;
 	
@@ -52,14 +52,14 @@ public class Player extends GamePlayer{
 	}
 	
 	public boolean IsValidCategory(String CombName) {
-		for (String x: Scoreboard.Categories) {
+		for (String x: CheckBoard.Categories) {
 			if(CombName.equals(x) && CheckBoard.AccessBoard(CombName)==-1) return true;
 			}
 		return false;
 	}
 	
 	public boolean IsGameEnd() {
-		for (String x: Scoreboard.Categories) {
+		for (String x: CheckBoard.Categories) {
 			if(CheckBoard.AccessBoard(x)==-1) return false;
 		}
 		return true;
@@ -67,7 +67,7 @@ public class Player extends GamePlayer{
 	
 	public void StartNewGame(String Text) {
 		Name = Text;
-		CheckBoard = new Scoreboard();
+		CheckBoard = new CheckBoard();
 		for(int i=0; i<5; i++) {
 			Dices[i] = new Dice();
 		}
