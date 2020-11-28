@@ -1,10 +1,10 @@
-class GamePlayer {
+public class Player {
 	protected String Name;
 	protected CheckBoard CheckBoard = new CheckBoard();
 	protected Dice[] Dices = new Dice[5];
 	protected int RollsLeft = 2;
 	
-	GamePlayer(){
+	Player(){
 		this.Name = "Anonymous";
 		this.RollsLeft = 2;
 		for(int i=0; i<5; i++) {
@@ -12,7 +12,7 @@ class GamePlayer {
 		}
 	}
 	
-	GamePlayer(String Name) {
+	Player(String Name) {
 		this.Name = Name;
 		this.RollsLeft = 2;
 		for(int i=0; i<5; i++) {
@@ -43,13 +43,6 @@ class GamePlayer {
 	public void Check(String CombName) {
 		CheckBoard.Check(CombName, Categories.ScoreCalculator(Dices, CombName));
 	}
-}
-
-public class Player extends GamePlayer{
-	
-	Player(String Name) {
-			super(Name);
-	}
 	
 	public boolean IsValidCategory(String CombName) {
 		for (String x: CheckBoard.Categories) {
@@ -74,4 +67,3 @@ public class Player extends GamePlayer{
 		RollsLeft = 2;
 	}
 }
-
