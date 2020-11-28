@@ -1,44 +1,44 @@
 import java.util.Random;
 
 public class Dice {
-	private int Eye;
-	private boolean isLock;
+	private int Eye; //주사위 위에 현재 향해있는 눈
+	private boolean IsLock; //주사위가 Keep되어있는지(Keep된 주사위는 다시 굴리지 않음)
 	
-	public void roll() {
-		if(!isLock) {
+	public void Roll() { //주사위를 다시 굴림. Eye는 private이기 때문에 직접 굴리지 않는 이상 변경할 수 없음
+		if(!IsLock) {
 			Random rand = new Random();
 			Eye = 1 + rand.nextInt(5);
 		}
 	}
 	
-	public void lock(){
-		isLock = true;
+	public void Lock(){
+		IsLock = true;
 	}
 	
-	public void unlock() {
-		isLock = false;
+	public void Unlock() {
+		IsLock = false;
 	}
 	
-	public void reverseLock() {
-		isLock = !isLock;
+	public void ReverseLock() {
+		IsLock = !IsLock;
 	}
 	
-	public int getEye() {
+	public int GetEye() {
 		return Eye;
 	}
 	
-	public boolean getIsLock(){
-		return isLock;
+	public boolean GetIsLock(){
+		return IsLock;
 	}
 	
 	Dice(){
 		Random rand = new Random();
 		this.Eye = 1 + rand.nextInt(5);
-		this.isLock = false;
+		this.IsLock = false;
 	}
 	
-	public void setDefaultValue() {
-		unlock();
-		roll();
+	public void SetDefault() {
+		Unlock();
+		Roll();
 	}
 }
