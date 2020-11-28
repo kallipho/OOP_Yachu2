@@ -20,7 +20,7 @@ public class Scoreboard {
 		scoreboard.replace(combName, score);
 	}
 	
-	public boolean isEnd() { //static List 추가해서 최적화시켜놨음.
+	public boolean isEnd() {
 		for (String x: Scoreboard.combList) {
 			if(scoreboard.get(x) == -1) return false;
 		}

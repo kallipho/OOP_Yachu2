@@ -33,9 +33,11 @@ public class CombCal {
 		return true;
 	}
 	
-	static public int Combination(MultipleDice Dices, String Comb) {
+	static public int Combination(Dice[] Dices, String Comb) {
 		int[] intDice = new int[5];
-		intDice = Dices.toIntDices();
+		for(int i=0; i<5; i++) {
+			intDice[i] = Dices[i].getEye();
+		}
 		switch(Comb) {
 		case "Ones":
 			return 1*CombCal.CountInt(intDice, 1);
