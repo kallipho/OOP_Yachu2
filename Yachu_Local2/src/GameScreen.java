@@ -176,7 +176,7 @@ public class GameScreen implements Screen{
 			DiceColor[i] = P.Dices[i].GetIsLock() ? Color.GRAY : Color.LIGHT_GRAY;
 		}
 		
-		RollButtonText = String.format("%d Roll", P.GetRollsLeft());
+		RollButtonText = String.format("Roll (%d)", P.GetRollsLeft());
 		
 		PlayerNameLabel.setText(PlayerNameText);
 		ScoreLabel.setText(ScoreText);
