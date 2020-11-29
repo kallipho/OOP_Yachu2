@@ -26,11 +26,30 @@ public class Categories {
 		return cnt;
 	}
 	
-	static public boolean IsAdjustArray(int[] Dice, int S, int E) {//S부터 E까지 인접한지 확인
-		for(int i=S; i<=E; i++) {
-			if(Dice[i] != Dice[i-1]+1) return false;
+	static public boolean IsAdjustArray(int[] Dice, boolean Straight) {//S부터 E까지 인접한지 확인
+		if(!Straight) {
+			boolean Ans1 = true; boolean Ans2 = true; boolean Ans3 = true;
+			for(int i=1; i<=4; i++) {
+				if(Categories.CountIntInArray(Dice, i)==0) Ans1 = false;
+			}
+			for(int i=2; i<=5; i++) {
+				if(Categories.CountIntInArray(Dice, i)==0) Ans2 = false;
+			}
+			for(int i=3; i<=6; i++) {
+				if(Categories.CountIntInArray(Dice, i)==0) Ans3 = false;
+			}
+			return Ans1 || (Ans2 || Ans3);
 		}
-		return true;
+		else {
+			boolean Ans1 = true; boolean Ans2 = true;
+			for(int i=1; i<=5; i++) {
+				if(Categories.CountIntInArray(Dice, i)==0) Ans1 = false;
+			}
+			for(int i=2; i<=6; i++) {
+				if(Categories.CountIntInArray(Dice, i)==0) Ans2 = false;
+			}
+			return Ans1 || Ans2;
+		}
 	}
 	
 	static public int ScoreCalculator(Dice[] Dices, String Comb) {
@@ -75,7 +94,7 @@ public class Categories {
 			}
 		case "Small straight":
 			Arrays.sort(intDice);
-			if(IsAdjustArray(intDice, 1, 3) || IsAdjustArray(intDice, 2, 4)) {
+			if(IsAdjustArray(intDice, false)) {
 				return 30;
 			}
 			else {
@@ -83,7 +102,7 @@ public class Categories {
 			}
 		case "Large straight":
 			Arrays.sort(intDice);
-			if(IsAdjustArray(intDice, 1, 4)) {
+			if(IsAdjustArray(intDice, true)) {
 				return 40;
 			}
 			else {
